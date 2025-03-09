@@ -8,59 +8,67 @@ use App\Http\Requests\UpdateJenisBarangRequest;
 
 class JenisBarangController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $data['jenisBarang'] = JenisBarang::all();
+        return view('jenis_barang.index')->with($data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreJenisBarangRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        try {
+            $kode = 'JB' . str_pad(JenisBarang::count() + 1, 3, '0', STR_PAD_LEFT);
+
+            JenisBarang::create([
+                'kode' => $kode,
+                'nama' => ucwords($validated['nama']),
+            ]);
+
+            return back()->with('success', 'Jenis barang berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            return back()->with([
+                'error' => 'Terjadi kesalahan saat menyimpan jenis barang.'
+            ]);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(JenisBarang $jenisBarang)
+    public function update(UpdateJenisBarangRequest $request, $id)
     {
-        //
+        $validated = $request->validated();
+
+        try {
+            JenisBarang::where('kode', $id)->update([
+                'nama' => ucwords($validated['nama']),
+            ]);
+
+            return back()->with('success', 'Jenis barang berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return back()->with([
+                'error' => 'Terjadi kesalahan saat memperbarui jenis barang.'
+            ]);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(JenisBarang $jenisBarang)
+    public function destroy($id)
     {
-        //
-    }
+        try {
+            $jenisBarang = JenisBarang::where('kode', $id)->first();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateJenisBarangRequest $request, JenisBarang $jenisBarang)
-    {
-        //
-    }
+            if (!$jenisBarang->barang()->exists()) {
+                $jenisBarang->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(JenisBarang $jenisBarang)
-    {
-        //
+                return back()->with('success', 'Jenis barang berhasil dihapus.');
+            } else {
+                return back()->with([
+                    'error' => 'Jenis barang tidak dapat dihapus karena memiliki relasi dengan data lain.'
+                ]);
+            }
+        } catch (\Exception $e) {
+            return back()->with([
+                'error' => 'Terjadi kesalahan saat menghapus jenis barang.'
+            ]);
+        }
     }
 }

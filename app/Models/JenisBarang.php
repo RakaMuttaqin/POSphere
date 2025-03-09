@@ -12,13 +12,17 @@ class JenisBarang extends Model
 
     protected $table = 'jenis_barang';
 
+    protected $primaryKey = 'kode';
+
+    public $incrementing = false;
+
     protected $fillable = [
+        'kode',
         'nama',
-        'status',
     ];
 
     public function barang()
     {
-        return $this->hasMany(Barang::class, 'jenis_barang_id', 'id');
+        return $this->hasMany(Barang::class, 'kode_jenis_barang', 'kode');
     }
 }
