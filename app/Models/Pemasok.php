@@ -14,13 +14,13 @@ class Pemasok extends Model
 
     protected $fillable = [
         'nama',
-        'email',
         'no_hp',
+        'email',
         'alamat',
     ];
 
-    public function barang()
+    public function pembelian()
     {
-        return $this->hasMany(Barang::class, 'pemasok_id', 'id');
+        return $this->hasMany(Pembelian::class, 'pemasok_id', 'id');
     }
 }

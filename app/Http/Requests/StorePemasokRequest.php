@@ -11,7 +11,7 @@ class StorePemasokRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StorePemasokRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nama' => 'required',
+            'email' => 'required|email',
+            'no_hp' => 'required|min:11,max:13',
+            'alamat' => 'required',
         ];
     }
 }

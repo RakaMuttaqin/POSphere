@@ -8,59 +8,61 @@ use App\Http\Requests\UpdatePemasokRequest;
 
 class PemasokController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $data['pemasok'] = Pemasok::all();
+        return view('pemasok.index')->with($data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StorePemasokRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        try {
+            Pemasok::create([
+                'nama' => $validated['nama'],
+                'email' => $validated['email'],
+                'no_hp' => $validated['no_hp'],
+                'alamat' => $validated['alamat'],
+            ]);
+
+            return back()->with('success', 'Pemasok berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan saat menambahkan pemasok.');
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Pemasok $pemasok)
+    public function update(UpdatePemasokRequest $request, $id)
     {
-        //
+        $validated = $request->validated();
+
+        try {
+            Pemasok::where('id', $id)->update([
+                'nama' => $validated['nama'],
+                'email' => $validated['email'],
+                'no_hp' => $validated['no_hp'],
+                'alamat' => $validated['alamat'],
+            ]);
+
+            return back()->with('success', 'Pemasok berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan saat memperbarui pemasok.');
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Pemasok $pemasok)
+    public function destroy($id)
     {
-        //
-    }
+        $pemasok = Pemasok::where('id', $id)->first();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdatePemasokRequest $request, Pemasok $pemasok)
-    {
-        //
-    }
+        if ($pemasok->pembelian()->exists()) {
+            return back()->with('error', 'Pemasok tidak dapat dihapus karena memiliki relasi dengan data lain.');
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Pemasok $pemasok)
-    {
-        //
+        try {
+            $pemasok->delete();
+            return back()->with('success', 'Pemasok berhasil dihapus.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Terjadi kesalahan saat menghapus pemasok.');
+        }
     }
 }
