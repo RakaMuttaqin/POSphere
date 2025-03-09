@@ -53,22 +53,17 @@ class JenisBarangController extends Controller
 
     public function destroy($id)
     {
+        $jenisBarang = JenisBarang::where('kode', $id)->first();
+
+        if ($jenisBarang->barang()->exists()) {
+            return back()->with('error', 'Jenis barang tidak dapat dihapus karena memiliki relasi dengan data lain.');
+        }
+
         try {
-            $jenisBarang = JenisBarang::where('kode', $id)->first();
-
-            if (!$jenisBarang->barang()->exists()) {
-                $jenisBarang->delete();
-
-                return back()->with('success', 'Jenis barang berhasil dihapus.');
-            } else {
-                return back()->with([
-                    'error' => 'Jenis barang tidak dapat dihapus karena memiliki relasi dengan data lain.'
-                ]);
-            }
+            $jenisBarang->delete();
+            return back()->with('success', 'Jenis barang berhasil dihapus.');
         } catch (\Exception $e) {
-            return back()->with([
-                'error' => 'Terjadi kesalahan saat menghapus jenis barang.'
-            ]);
+            return back()->with('error', 'Terjadi kesalahan saat menghapus jenis barang.');
         }
     }
 }
