@@ -11,7 +11,7 @@ class StoreBarangRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class StoreBarangRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'kode_jenis_barang' => 'required|string',
+            'barcode' => 'required|string|unique:barang,barcode',
+            'nama' => 'required|string',
+            'satuan_id' => 'required|exists:satuan,id',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 }

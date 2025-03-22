@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detail_penjualan', function (Blueprint $table) {
+        Schema::create('barang', function (Blueprint $table) {
             $table->string('kode')->primary();
-            $table->string('kode_penjualan');
-            $table->string('kode_barang');
+            $table->string('kode_jenis_barang');
+            $table->string('nama');
+            $table->string('barcode')->unique();
+            $table->foreignId('satuan_id')->constrained('satuan')->onDelete('cascade');
+            $table->string('gambar')->nullable();
             $table->double('harga_beli');
             $table->double('harga_jual');
-            $table->integer('jumlah');
-            $table->double('subtotal');
 
-            $table->foreign('kode_penjualan')->references('kode')->on('penjualan')->onDelete('cascade');
-            $table->foreign('kode_barang')->references('kode')->on('barang')->onDelete('cascade');
+            $table->foreign('kode_jenis_barang')->references('kode')->on('jenis_barang')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('detail_penjualan');
+        Schema::dropIfExists('barang');
     }
 };

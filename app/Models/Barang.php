@@ -11,33 +11,44 @@ class Barang extends Model
     use HasFactory;
 
     protected $table = 'barang';
+
     protected $primaryKey = 'kode';
+
     public $incrementing = false;
-    public $timestamps = false;
 
     protected $fillable = [
         'kode',
-        'jenis_barang_id',
+        'kode_jenis_barang',
+        'barcode',
         'nama',
+        'satuan_id',
         'gambar',
-        'stok',
         'harga_beli',
         'harga_jual',
-        'tanggal_exp',
     ];
 
     public function jenis_barang()
     {
-        return $this->belongsTo(JenisBarang::class, 'jenis_barang_id', 'id');
+        return $this->belongsTo(JenisBarang::class, 'kode_jenis_barang', 'kode');
     }
 
-    public function detail_pembelian()
+    public function satuan()
     {
-        return $this->hasMany(DetailPembelian::class, 'kode_barang', 'kode');
+        return $this->belongsTo(Satuan::class, 'satuan_id', 'id');
+    }
+
+    public function batch()
+    {
+        return $this->hasMany(Batch::class, 'kode_barang', 'kode');
     }
 
     public function detail_penjualan()
     {
         return $this->hasMany(DetailPenjualan::class, 'kode_barang', 'kode');
+    }
+
+    public function detail_pembelian()
+    {
+        return $this->hasMany(DetailPembelian::class, 'kode_barang', 'kode');
     }
 }

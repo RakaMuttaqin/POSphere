@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\JenisBarang;
 use App\Http\Requests\StoreJenisBarangRequest;
 use App\Http\Requests\UpdateJenisBarangRequest;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class JenisBarangController extends Controller
 {
+    use HasFactory;
+
     public function index()
     {
         $data['jenisBarang'] = JenisBarang::all();
@@ -53,7 +56,7 @@ class JenisBarangController extends Controller
 
     public function destroy($id)
     {
-        $jenisBarang = JenisBarang::where('kode', $id)->first();
+        $jenisBarang = JenisBarang::with('barang')->where('kode', $id)->first();
 
         if ($jenisBarang->barang()->exists()) {
             return back()->with('error', 'Jenis barang tidak dapat dihapus karena memiliki relasi dengan data lain.');
