@@ -19,12 +19,17 @@ class AuthController extends Controller
             Auth::login(Auth::user());
             return redirect('/')->with('success', 'You have successfully logged in');
         }
-        return redirect()->route('auth.login');
+        return redirect()->route('login')->with('error', 'Invalid email or password');
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
-        return redirect()->route('auth.login');
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login')->with('success', 'You have successfully logged out');
     }
 }
