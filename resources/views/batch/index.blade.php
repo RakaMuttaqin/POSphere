@@ -1,6 +1,9 @@
 @extends('layouts.app')
 @push('title')
-    Jenis Barang
+    Batch
+@endpush
+@push('active')
+    active
 @endpush
 @push('styles')
     <link rel="apple-touch-icon" href="{{ asset('app-assets') }}/images/ico/apple-icon-120.png">
@@ -53,7 +56,7 @@
                         </li>
                         <li class="breadcrumb-item"><a href="">Master Data</a>
                         </li>
-                        <li class="breadcrumb-item active">Jenis Barang</li>
+                        <li class="breadcrumb-item active">Batch</li>
                     </ol>
                 </div>
             </div>
@@ -70,33 +73,44 @@
                     <table class="datatables-basic table">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>#</th>
-                                <th>Kode</th>
-                                <th>Nama Jenis</th>
+                                <th>Kode Batch</th>
+                                <th>Barang</th>
+                                <th>Tanggal Masuk</th>
+                                <th>Stok</th>
+                                <th>Tanggal Expired</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($jenisBarang as $item)
+                            @foreach ($batch as $item)
                                 <tr>
+                                    <td></td>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->kode }}</td>
-                                    <td>{{ $item->nama }}</td>
+                                    <td>{{ $item->barang->nama }}</td>
+                                    <td>{{ $item->tanggal_produksi }}</td>
+                                    <td>{{ $item->stok }}</td>
+                                    <td>{{ $item->tanggal_expired }}</td>
                                     <td>
-                                        <button class="btn btn-sm edit-btn btn-primary" data-id="{{ $item->kode }}"
-                                            data-nama="{{ $item->nama }}" data-bs-toggle="modal"
+                                        {{-- <button class="btn btn-sm edit-btn btn-primary" data-id="{{ $item->kode }}"
+                                            data-kode_barang="{{ $item->kode_barang }}"
+                                            data-tanggal_produksi="{{ $item->tanggal_produksi }}"
+                                            data-stok="{{ $item->stok }}"
+                                            data-tanggal_expired="{{ $item->tanggal_expired }}" data-bs-toggle="modal"
                                             data-bs-target="#modalForm">
                                             <i data-feather="edit"></i>
-                                        </button>
+                                        </button> --}}
 
-                                        <form action="{{ route('jenis-barang.destroy', $item->kode) }}" method="POST"
+                                        {{-- <form action="{{ route('batch.destroy', $item->kode) }}" method="POST"
                                             class="d-inline delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger delete-btn">
                                                 <i data-feather="trash-2"></i>
                                             </button>
-                                        </form>
+                                        </form> --}}
                                     </td>
                                 </tr>
                             @endforeach
@@ -109,7 +123,7 @@
     </section>
     <!--/ Basic table -->
 
-    @include('jenis_barang.modal')
+    {{-- @include('batch.modal') --}}
 @endsection
 
 @push('scripts')
@@ -199,32 +213,28 @@
 
         // Edit
         $(document).ready(function() {
-            $('.edit-btn').click(function() {
-                // Get data attributes from the clicked button
+            // Event listener untuk tombol edit
+            $(document).on('click', '.edit-btn', function() {
                 let id = $(this).data('id');
-                let nama = $(this).data('nama');
+                let kode_barang = $(this).data('kode_barang');
+                let tanggal_produksi = $(this).data('tanggal_produksi');
+                let stok = $(this).data('stok');
+                let tanggal_expired = $(this).data('tanggal_expired');
 
-                // Set values in the modal form fields
-                $('#nama').val(nama).focus();
-
-                // Update the form action URL with the correct item ID for update
-                $('.form-validate').attr('action', `/jenis-barang/edit/${id}`);
                 $('#formMethod').val('PUT');
-
-                // Change the modal title to "Edit Jenis Barang"
-                $('#modalFormTitle').text('Edit Jenis Barang');
+                $('.form-validate').attr('action', `/batch/edit/${id}`);
+                $('#modalFormTitle').text('Edit batch');
             });
 
-            // Reset the form when the modal is closed
+            // Reset modal ketika ditutup
             $('#modalForm').on('hidden.bs.modal', function() {
-                // Clear form inputs
-                $('#nama').val('');
+                $('#kode_barang').val('').trigger('change');
+                $('#tanggal_produksi').val('');
+                $('#stok').val('');
+                $('#tanggal_expired').val('');
 
-                // Reset form action for adding new data
-                $('.form-validate').attr('action', "{{ route('jenis-barang.store') }}");
                 $('#formMethod').val('POST');
-
-                // Reset modal title to "Tambah Data"
+                $('.form-validate').attr('action', "{{ route('batch.store') }}");
                 $('#modalFormTitle').text('Tambah Data');
             });
         });
@@ -236,35 +246,44 @@
 
             if (dt_basic_table.length) {
                 dt_basic_table.DataTable({
-                    paging: true, // Aktifkan paginasi
-                    pageLength: 5, // Default jumlah data per halaman
-                    lengthMenu: [5, 10, 25, 50, 75, 100], // Pilihan jumlah data per halaman
-                    ordering: true, // Aktifkan fitur sorting di header
+                    paging: true,
+                    pageLength: 5,
+                    lengthMenu: [5, 10, 25, 50, 75, 100],
+                    ordering: true,
+                    columnDefs: [{
+                        targets: 0,
+                        orderable: false,
+                        visible: false,
+                    }, {
+                        targets: -1,
+                        orderable: false
+                    }],
                     order: [
-                        [0, 'asc']
-                    ], // Urutan default berdasarkan kolom ke-2 (Nama)
+                        [1, 'asc']
+                    ],
                     dom: '<"card-header border-bottom p-1"<"head-label"><"dt-action-buttons text-end"B>>' +
                         '<"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>' +
                         't' +
                         '<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
-                    buttons: [{
-                            text: feather.icons['plus'].toSvg({
-                                class: 'me-50 font-small-4'
-                            }) + 'Tambah Jenis Barang',
-                            className: 'create-new btn btn-primary',
-                            attr: {
-                                'data-bs-toggle': 'modal',
-                                'data-bs-target': '#modalForm',
-                            },
-                            init: function(api, node, config) {
-                                $(node).removeClass('btn-secondary');
-                                $(node).click(function() {
-                                    setTimeout(function() {
-                                        $('#nama').focus();
-                                    }, 500);
-                                });
-                            }
-                        },
+                    buttons: [
+                        // {
+                        //     text: feather.icons['plus'].toSvg({
+                        //         class: 'me-50 font-small-4'
+                        //     }) + 'Tambah batch',
+                        //     className: 'create-new btn btn-primary',
+                        //     attr: {
+                        //         'data-bs-toggle': 'modal',
+                        //         'data-bs-target': '#modalForm',
+                        //     },
+                        //     init: function(api, node, config) {
+                        //         $(node).removeClass('btn-secondary');
+                        //         $(node).click(function() {
+                        //             setTimeout(function() {
+                        //                 $('#barcode').focus();
+                        //             }, 500);
+                        //         });
+                        //     }
+                        // },
                         {
                             extend: 'collection',
                             className: 'btn btn-outline-secondary dropdown-toggle me-2',
@@ -278,8 +297,8 @@
                                     }) + 'Print',
                                     className: 'dropdown-item',
                                     exportOptions: {
-                                        columns: [1, 2]
-                                    } // Menyesuaikan kolom yang diekspor
+                                        columns: [1, 2, 3, 4, 5]
+                                    }
                                 },
                                 {
                                     extend: 'csv',
@@ -288,7 +307,7 @@
                                     }) + 'Csv',
                                     className: 'dropdown-item',
                                     exportOptions: {
-                                        columns: [1, 2]
+                                        columns: [1, 2, 3, 4, 5]
                                     }
                                 },
                                 {
@@ -298,7 +317,7 @@
                                     }) + 'Excel',
                                     className: 'dropdown-item',
                                     exportOptions: {
-                                        columns: [1, 2]
+                                        columns: [1, 2, 3, 4, 5]
                                     }
                                 },
                                 {
@@ -308,7 +327,7 @@
                                     }) + 'Pdf',
                                     className: 'dropdown-item',
                                     exportOptions: {
-                                        columns: [1, 2]
+                                        columns: [1, 2, 3, 4, 5]
                                     }
                                 },
                                 {
@@ -318,7 +337,7 @@
                                     }) + 'Copy',
                                     className: 'dropdown-item',
                                     exportOptions: {
-                                        columns: [1, 2]
+                                        columns: [1, 2, 3, 4, 5]
                                     }
                                 }
                             ]
@@ -333,23 +352,45 @@
                     }
                 });
 
-                $('div.head-label').html('<h6 class="mb-0">Jenis Barang</h6>');
+                $('div.head-label').html('<h6 class="mb-0"></h6>');
             }
         });
 
         $(document).ready(function() {
             $('.form-validate').validate({
                 rules: {
-                    nama: {
+                    kode_barang: {
+                        required: true
+                    },
+                    tanggal_produksi: {
                         required: true,
-                        minlength: 3
-                    }
+                        date: true
+                    },
+                    stok: {
+                        required: true,
+                        number: true
+                    },
+                    tanggal_expired: {
+                        required: true,
+                        date: true
+                    },
                 },
                 messages: {
-                    nama: {
-                        required: "Nama Jenis Barang harus diisi.",
-                        minlength: "Nama Jenis Barang minimal 3 karakter.",
-                    }
+                    kode_barang: {
+                        required: "Batch harus diisi."
+                    },
+                    tanggal_produksi: {
+                        required: "Tanggal produksi harus diisi.",
+                        date: "Tanggal produksi harus berupa tanggal."
+                    },
+                    stok: {
+                        required: "Stok harus diisi.",
+                        number: "Stok harus berupa angka."
+                    },
+                    tanggal_expired: {
+                        required: "Tanggal expired harus diisi.",
+                        date: "Tanggal expired harus berupa tanggal."
+                    },
                 },
                 errorPlacement: function(error, element) {
                     error.addClass("invalid-feedback");

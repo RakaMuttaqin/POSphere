@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @push('title')
-    Jenis Barang
+    Member
 @endpush
 @push('styles')
     <link rel="apple-touch-icon" href="{{ asset('app-assets') }}/images/ico/apple-icon-120.png">
@@ -51,9 +51,9 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Home</a>
                         </li>
-                        <li class="breadcrumb-item"><a href="">Master Data</a>
+                        <li class="breadcrumb-item"><a href="">Keanggotaan</a>
                         </li>
-                        <li class="breadcrumb-item active">Jenis Barang</li>
+                        <li class="breadcrumb-item active">Member</li>
                     </ol>
                 </div>
             </div>
@@ -71,25 +71,39 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Kode</th>
-                                <th>Nama Jenis</th>
+                                <th>Kode Member</th>
+                                <th>Jenis Member</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>No Telp</th>
+                                <th>Alamat</th>
+                                <th>Tanggal Bergabung</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($jenisBarang as $item)
+                            @foreach ($member as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->kode }}</td>
                                     <td>{{ $item->nama }}</td>
+                                    <td>{{ $item->jenis_member->nama }}</td>
+                                    <td>{{ $item->email }}</td>
+                                    <td>{{ $item->no_hp }}</td>
+                                    <td>{{ $item->alamat }}</td>
+                                    <td>{{ $item->tanggal_bergabung }}</td>
                                     <td>
-                                        <button class="btn btn-sm edit-btn btn-primary" data-id="{{ $item->kode }}"
-                                            data-nama="{{ $item->nama }}" data-bs-toggle="modal"
+                                        <button class="btn btn-sm edit-btn btn-primary" data-id="{{ $item->id }}"
+                                            data-nama="{{ $item->nama }}"
+                                            data-jenis_member="{{ $item->jenis_member->kode }}"
+                                            data-email="{{ $item->email }}" data-no_hp="{{ $item->no_hp }}"
+                                            data-alamat="{{ $item->alamat }}"
+                                            data-tanggal_bergabung="{{ $item->tanggal_bergabung }}" data-bs-toggle="modal"
                                             data-bs-target="#modalForm">
                                             <i data-feather="edit"></i>
                                         </button>
 
-                                        <form action="{{ route('jenis-barang.destroy', $item->kode) }}" method="POST"
+                                        <form action="{{ route('member.destroy', $item->kode) }}" method="POST"
                                             class="d-inline delete-form">
                                             @csrf
                                             @method('DELETE')
@@ -109,7 +123,7 @@
     </section>
     <!--/ Basic table -->
 
-    @include('jenis_barang.modal')
+    @include('member.modal')
 @endsection
 
 @push('scripts')
@@ -200,31 +214,43 @@
         // Edit
         $(document).ready(function() {
             $('.edit-btn').click(function() {
-                // Get data attributes from the clicked button
+                // Ambil atribut data dari tombol yang diklik
                 let id = $(this).data('id');
                 let nama = $(this).data('nama');
+                let jenis_member = $(this).data('jenis_member');
+                let email = $(this).data('email');
+                let no_hp = $(this).data('no_hp');
+                let alamat = $(this).data('alamat');
 
-                // Set values in the modal form fields
+                // Setel nilai di bidang formulir modal
                 $('#nama').val(nama).focus();
+                $('#jenis_member').val(jenis_member).focus();
+                $('#email').val(email).focus();
+                $('#no_hp').val(no_hp).focus();
+                $('#alamat').val(alamat).focus();
 
-                // Update the form action URL with the correct item ID for update
-                $('.form-validate').attr('action', `/jenis-barang/edit/${id}`);
+                // Perbarui URL aksi formulir dengan ID item yang benar untuk diperbarui
+                $('.form-validate').attr('action', `/member/edit/${id}`);
                 $('#formMethod').val('PUT');
 
-                // Change the modal title to "Edit Jenis Barang"
-                $('#modalFormTitle').text('Edit Jenis Barang');
+                // Ubah judul modal menjadi "Ubah Data Terbaru"
+                $('#modalFormTitle').text('Ubah Data Terbaru');
             });
 
-            // Reset the form when the modal is closed
+            // Atur ulang formulir saat modal ditutup
             $('#modalForm').on('hidden.bs.modal', function() {
-                // Clear form inputs
+                // Kosongkan input formulir
                 $('#nama').val('');
+                $('#jenis_member').val('');
+                $('#email').val('');
+                $('#no_hp').val('');
+                $('#alamat').val('');
 
-                // Reset form action for adding new data
-                $('.form-validate').attr('action', "{{ route('jenis-barang.store') }}");
+                // Atur ulang aksi formulir untuk menambah data baru
+                $('.form-validate').attr('action', "{{ route('member.store') }}");
                 $('#formMethod').val('POST');
 
-                // Reset modal title to "Tambah Data"
+                // Atur ulang judul modal menjadi "Tambah Data"
                 $('#modalFormTitle').text('Tambah Data');
             });
         });
@@ -250,7 +276,7 @@
                     buttons: [{
                             text: feather.icons['plus'].toSvg({
                                 class: 'me-50 font-small-4'
-                            }) + 'Tambah Jenis Barang',
+                            }) + 'Tambah member',
                             className: 'create-new btn btn-primary',
                             attr: {
                                 'data-bs-toggle': 'modal',
@@ -278,7 +304,7 @@
                                     }) + 'Print',
                                     className: 'dropdown-item',
                                     exportOptions: {
-                                        columns: [1, 2]
+                                        columns: [0, 1, 2, 3, 4]
                                     } // Menyesuaikan kolom yang diekspor
                                 },
                                 {
@@ -288,7 +314,7 @@
                                     }) + 'Csv',
                                     className: 'dropdown-item',
                                     exportOptions: {
-                                        columns: [1, 2]
+                                        columns: [0, 1, 2, 3, 4]
                                     }
                                 },
                                 {
@@ -298,7 +324,7 @@
                                     }) + 'Excel',
                                     className: 'dropdown-item',
                                     exportOptions: {
-                                        columns: [1, 2]
+                                        columns: [0, 1, 2, 3, 4]
                                     }
                                 },
                                 {
@@ -308,7 +334,7 @@
                                     }) + 'Pdf',
                                     className: 'dropdown-item',
                                     exportOptions: {
-                                        columns: [1, 2]
+                                        columns: [0, 1, 2, 3, 4]
                                     }
                                 },
                                 {
@@ -318,7 +344,7 @@
                                     }) + 'Copy',
                                     className: 'dropdown-item',
                                     exportOptions: {
-                                        columns: [1, 2]
+                                        columns: [0, 1, 2, 3, 4]
                                     }
                                 }
                             ]
@@ -333,7 +359,7 @@
                     }
                 });
 
-                $('div.head-label').html('<h6 class="mb-0">Jenis Barang</h6>');
+                $('div.head-label').html('<h6 class="mb-0">Member</h6>');
             }
         });
 
@@ -342,13 +368,35 @@
                 rules: {
                     nama: {
                         required: true,
-                        minlength: 3
+                    },
+                    alamat: {
+                        required: true,
+                    },
+                    no_hp: {
+                        required: true,
+                        minlength: 11,
+                        maxlength: 13
+                    },
+                    email: {
+                        required: true,
+                        email: true
                     }
                 },
                 messages: {
                     nama: {
-                        required: "Nama Jenis Barang harus diisi.",
-                        minlength: "Nama Jenis Barang minimal 3 karakter.",
+                        required: "Nama member harus diisi.",
+                    },
+                    alamat: {
+                        required: "Alamat member harus diisi.",
+                    },
+                    no_hp: {
+                        required: "Nomor Telepon member harus diisi.",
+                        minlength: "Nomor Telepon member minimal 11 karakter.",
+                        maxlength: "Nomor Telepon member maksimal 13 karakter."
+                    },
+                    email: {
+                        required: "Email member harus diisi.",
+                        email: "Format email salah.",
                     }
                 },
                 errorPlacement: function(error, element) {
@@ -362,8 +410,7 @@
                 unhighlight: function(element) {
                     $(element).removeClass("is-invalid");
                     $(element).addClass("is-valid");
-                },
-
+                }
             });
         });
     </script>

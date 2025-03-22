@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\JenisBarang;
+use App\Models\JenisMember;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 
-class JenisBarangSeeder extends Seeder
+class JenisMemberSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,17 +16,16 @@ class JenisBarangSeeder extends Seeder
     public function run(): void
     {
         Schema::disableForeignKeyConstraints();
-        JenisBarang::truncate();
+        JenisMember::truncate();
         Schema::enableForeignKeyConstraints();
-        $file = File::get('database/data/jenis_barang.json');
+        $file = File::get('database/data/jenis_member.json');
         $data = json_decode($file);
 
         foreach ($data as $item) {
-            JenisBarang::create([
+            JenisMember::create([
                 'kode' => $item->kode,
                 'nama' => $item->nama
             ]);
         }
-        // JenisBarang::factory()->count(5)->create();
     }
 }

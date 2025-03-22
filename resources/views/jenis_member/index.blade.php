@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @push('title')
-    Jenis Barang
+    Jenis Member
 @endpush
 @push('styles')
     <link rel="apple-touch-icon" href="{{ asset('app-assets') }}/images/ico/apple-icon-120.png">
@@ -51,9 +51,9 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Home</a>
                         </li>
-                        <li class="breadcrumb-item"><a href="">Master Data</a>
+                        <li class="breadcrumb-item"><a href="">Keanggotaan</a>
                         </li>
-                        <li class="breadcrumb-item active">Jenis Barang</li>
+                        <li class="breadcrumb-item active">Jenis Member</li>
                     </ol>
                 </div>
             </div>
@@ -72,12 +72,12 @@
                             <tr>
                                 <th>#</th>
                                 <th>Kode</th>
-                                <th>Nama Jenis</th>
+                                <th>Jenis</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($jenisBarang as $item)
+                            @foreach ($jenisMember as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->kode }}</td>
@@ -89,7 +89,7 @@
                                             <i data-feather="edit"></i>
                                         </button>
 
-                                        <form action="{{ route('jenis-barang.destroy', $item->kode) }}" method="POST"
+                                        <form action="{{ route('jenis-member.destroy', $item->kode) }}" method="POST"
                                             class="d-inline delete-form">
                                             @csrf
                                             @method('DELETE')
@@ -109,7 +109,7 @@
     </section>
     <!--/ Basic table -->
 
-    @include('jenis_barang.modal')
+    @include('jenis_member.modal')
 @endsection
 
 @push('scripts')
@@ -165,7 +165,7 @@
         <script>
             Swal.fire({
                 icon: 'error',
-                title: 'Error',
+                title: 'Gagal',
                 text: @json(session('error')),
                 customClass: {
                     confirmButton: 'btn btn-danger'
@@ -208,11 +208,11 @@
                 $('#nama').val(nama).focus();
 
                 // Update the form action URL with the correct item ID for update
-                $('.form-validate').attr('action', `/jenis-barang/edit/${id}`);
+                $('.form-validate').attr('action', `/jenis-member/edit/${id}`);
                 $('#formMethod').val('PUT');
 
-                // Change the modal title to "Edit Jenis Barang"
-                $('#modalFormTitle').text('Edit Jenis Barang');
+                // Change the modal title to "Edit Jenis Member"
+                $('#modalFormTitle').text('Edit Jenis Member');
             });
 
             // Reset the form when the modal is closed
@@ -221,7 +221,7 @@
                 $('#nama').val('');
 
                 // Reset form action for adding new data
-                $('.form-validate').attr('action', "{{ route('jenis-barang.store') }}");
+                $('.form-validate').attr('action', "{{ route('jenis-member.store') }}");
                 $('#formMethod').val('POST');
 
                 // Reset modal title to "Tambah Data"
@@ -250,7 +250,7 @@
                     buttons: [{
                             text: feather.icons['plus'].toSvg({
                                 class: 'me-50 font-small-4'
-                            }) + 'Tambah Jenis Barang',
+                            }) + 'Tambah Jenis Member',
                             className: 'create-new btn btn-primary',
                             attr: {
                                 'data-bs-toggle': 'modal',
@@ -278,7 +278,7 @@
                                     }) + 'Print',
                                     className: 'dropdown-item',
                                     exportOptions: {
-                                        columns: [1, 2]
+                                        columns: [0, 1, 2]
                                     } // Menyesuaikan kolom yang diekspor
                                 },
                                 {
@@ -288,7 +288,7 @@
                                     }) + 'Csv',
                                     className: 'dropdown-item',
                                     exportOptions: {
-                                        columns: [1, 2]
+                                        columns: [0, 1, 2]
                                     }
                                 },
                                 {
@@ -298,7 +298,7 @@
                                     }) + 'Excel',
                                     className: 'dropdown-item',
                                     exportOptions: {
-                                        columns: [1, 2]
+                                        columns: [0, 1, 2]
                                     }
                                 },
                                 {
@@ -308,7 +308,7 @@
                                     }) + 'Pdf',
                                     className: 'dropdown-item',
                                     exportOptions: {
-                                        columns: [1, 2]
+                                        columns: [0, 1, 2]
                                     }
                                 },
                                 {
@@ -318,7 +318,7 @@
                                     }) + 'Copy',
                                     className: 'dropdown-item',
                                     exportOptions: {
-                                        columns: [1, 2]
+                                        columns: [0, 1, 2]
                                     }
                                 }
                             ]
@@ -333,7 +333,7 @@
                     }
                 });
 
-                $('div.head-label').html('<h6 class="mb-0">Jenis Barang</h6>');
+                $('div.head-label').html('<h6 class="mb-0">Jenis Member</h6>');
             }
         });
 
@@ -347,8 +347,8 @@
                 },
                 messages: {
                     nama: {
-                        required: "Nama Jenis Barang harus diisi.",
-                        minlength: "Nama Jenis Barang minimal 3 karakter.",
+                        required: "Nama Jenis Member harus diisi.",
+                        minlength: "Nama Jenis Member minimal 3 karakter.",
                     }
                 },
                 errorPlacement: function(error, element) {

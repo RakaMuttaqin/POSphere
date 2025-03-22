@@ -17,7 +17,8 @@ class JenisBarangFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'kode' => 'JB' . sprintF('%08d', fake()->unique()->numberBetween(1, 99999999)),
+            'nama' => fake()->unique()->randomElement(['Minyak', 'Mie', 'Bumbu', 'Minuman', 'Makanan Bayi'])
         ];
     }
 }
