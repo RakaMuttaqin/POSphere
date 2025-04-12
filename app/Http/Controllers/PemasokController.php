@@ -52,7 +52,7 @@ class PemasokController extends Controller
 
     public function destroy($id)
     {
-        $pemasok = Pemasok::where('id', $id)->first();
+        $pemasok = Pemasok::with('pembelian')->where('id', $id)->first();
 
         if ($pemasok->pembelian()->exists()) {
             return back()->with('error', 'Pemasok tidak dapat dihapus karena memiliki relasi dengan data lain.');

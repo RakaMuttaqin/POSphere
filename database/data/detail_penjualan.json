@@ -1,0 +1,63 @@
+[
+    {
+        "kode": "PJ0001 0001",
+        "kode_penjualan": "PJ0001",
+        "kode_barang": "BR0001",
+        "kode_batch": "BATCH0001",
+        "harga_beli": 30000,
+        "harga_jual": 50000,
+        "jumlah": 2,
+        "subtotal": 100000
+    },
+    {
+        "kode": "PJ0002 0001",
+        "kode_penjualan": "PJ0002",
+        "kode_barang": "BR0003",
+        "kode_batch": "BATCH0003",
+        "harga_beli": 40000,
+        "harga_jual": 49000,
+        "jumlah": 2,
+        "subtotal": 98000
+    },
+    {
+        "kode": "PJ0003 0001",
+        "kode_penjualan": "PJ0003",
+        "kode_barang": "BR0001",
+        "kode_batch": "BATCH0001",
+        "harga_beli": 30000,
+        "harga_jual": 50000,
+        "jumlah": 2,
+        "subtotal": 100000
+    },
+    {
+        "kode": "PJ0004 0001",
+        "kode_penjualan": "PJ0004",
+        "kode_barang": "BR0001",
+        "kode_batch": "BATCH0001",
+        "harga_beli": 30000,
+        "harga_jual": 50000,
+        "jumlah": 4,
+        "subtotal": 200000
+    },
+    {
+        "kode": "PJ0004 0002",
+        "kode_penjualan": "PJ0004",
+        "kode_barang": "BR0003",
+        "kode_batch": "BATCH0003",
+        "harga_beli": 40000,
+        "harga_jual": 49000,
+        "jumlah": 2,
+        "subtotal": 98000
+    },
+    {
+        "kode": "PJ0005 0001",
+        "kode_penjualan": "PJ0005",
+        "kode_barang": "BR0001",
+        "kode_batch": "BATCH0001",
+        "harga_beli": 30000,
+        "harga_jual": 50000,
+        "jumlah": 2,
+        "subtotal": 100000
+    }
+]
+

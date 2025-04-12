@@ -12,14 +12,11 @@ class DetailPenjualan extends Model
 
     protected $table = 'detail_penjualan';
 
-    protected $primaryKey = 'kode';
-
-    public $incrementing = false;
-
     protected $fillable = [
         'kode',
         'kode_penjualan',
         'kode_barang',
+        'kode_batch',
         'harga_beli',
         'harga_jual',
         'jumlah',
@@ -34,5 +31,10 @@ class DetailPenjualan extends Model
     public function barang()
     {
         return $this->belongsTo(Barang::class, 'kode_barang', 'kode');
+    }
+
+    public function batch()
+    {
+        return $this->belongsTo(Batch::class, 'kode_batch', 'kode');
     }
 }

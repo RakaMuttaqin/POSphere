@@ -17,9 +17,9 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             Auth::login(Auth::user());
-            return redirect('/')->with('success', 'You have successfully logged in');
+            return redirect('/')->with('success', 'Anda telah berhasil login');
         }
-        return redirect()->route('login')->with('error', 'Invalid email or password');
+        return redirect()->back()->with('error', 'Password atau email anda salah.');
     }
 
     public function logout(Request $request)
@@ -30,6 +30,6 @@ class AuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('login')->with('success', 'You have successfully logged out');
+        return redirect()->route('login')->with('success', 'Anda telah berhasil logout');
     }
 }

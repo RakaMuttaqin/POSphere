@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DetailPembelian;
-use App\Http\Requests\StoreDetailPembelianRequest;
-use App\Http\Requests\UpdateDetailPembelianRequest;
+use App\Models\Pembayaran;
+use App\Http\Requests\StorePembayaranRequest;
+use App\Http\Requests\UpdatePembayaranRequest;
 
-class DetailPembelianController extends Controller
+class PembayaranController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class DetailPembelianController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDetailPembelianRequest $request)
+    public function store(StorePembayaranRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class DetailPembelianController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(DetailPembelian $detailPembelian)
+    public function show(Pembayaran $pembayaran)
     {
         //
     }
@@ -43,7 +43,7 @@ class DetailPembelianController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(DetailPembelian $detailPembelian)
+    public function edit(Pembayaran $pembayaran)
     {
         //
     }
@@ -51,7 +51,7 @@ class DetailPembelianController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDetailPembelianRequest $request, DetailPembelian $detailPembelian)
+    public function update(UpdatePembayaranRequest $request, Pembayaran $pembayaran)
     {
         //
     }
@@ -59,7 +59,7 @@ class DetailPembelianController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DetailPembelian $detailPembelian)
+    public function destroy(Pembayaran $pembayaran)
     {
         //
     }

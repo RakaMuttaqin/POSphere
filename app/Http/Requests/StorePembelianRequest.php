@@ -11,7 +11,7 @@ class StorePembelianRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class StorePembelianRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'pemasok_id' => 'required|exists:pemasok,id',
+            'tanggal_terima' => 'required|date',
+            'keterangan' => 'nullable|string',
+            'details' => 'required|array|min:1',
         ];
     }
 }

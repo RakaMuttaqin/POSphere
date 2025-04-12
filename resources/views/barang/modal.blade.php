@@ -47,7 +47,7 @@
                         </div>
                     </div>
 
-                    <div class="row g-1">
+                    <div id="harga" class="row g-1" hidden>
                         <div class="mb-1 col-md-6">
                             <label class="form-label" for="harga_beli">Harga Beli</label>
                             <input type="number" id="harga_beli" class="form-control" placeholder="Harga Beli"

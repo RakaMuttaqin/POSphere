@@ -2,9 +2,7 @@
 @push('title')
     Barang
 @endpush
-@push('active')
-    active
-@endpush
+
 @push('styles')
     <link rel="apple-touch-icon" href="{{ asset('app-assets') }}/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets') }}/images/ico/favicon.ico">
@@ -244,6 +242,7 @@
                 $('#barcode').val(barcode).attr('readonly', true);
                 $('#nama').val(nama);
                 $('#satuan_id').val(satuan_id);
+                $('#harga').attr('hidden', false);
                 $('#harga_beli').val(harga_beli).attr('readonly', true);
                 $('#harga_jual').val(harga_jual).attr('readonly', true);
 
@@ -277,6 +276,7 @@
                 $('#barcode').val('').attr('readonly', false);
                 $('#nama').val('');
                 $('#satuan_id').val('');
+                $('#harga').attr('hidden', true);
                 $('#harga_jual').val('');
                 $('#harga_beli').val('');
 

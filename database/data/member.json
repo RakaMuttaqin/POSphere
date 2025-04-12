@@ -1,0 +1,93 @@
+[
+    {
+        "kode": "MB001",
+        "nama": "Muhammad Fikri",
+        "kode_jenis_member": "JM0001",
+        "email": "fikri1@gmail.com",
+        "no_hp": "081212345678",
+        "alamat": "Jl. Jend. Sudirman No.1, Jakarta",
+        "tanggal_bergabung": "2025-01-20"
+    },
+    {
+        "kode": "MB002",
+        "nama": "Siti Nurhaliza",
+        "kode_jenis_member": "JM0002",
+        "email": "siti2@gmail.com",
+        "no_hp": "081234567890",
+        "alamat": "Jl. Jend. Sudirman No.2, Jakarta",
+        "tanggal_bergabung": "2025-01-20"
+    },
+    {
+        "kode": "MB003",
+        "nama": "Rahmat Hidayat",
+        "kode_jenis_member": "JM0003",
+        "email": "rahmat3@gmail.com",
+        "no_hp": "081345678901",
+        "alamat": "Jl. Jend. Sudirman No.3, Jakarta",
+        "tanggal_bergabung": "2025-01-20"
+    },
+    {
+        "kode": "MB004",
+        "nama": "Asep Wahyu",
+        "kode_jenis_member": "JM0001",
+        "email": "asep4@gmail.com",
+        "no_hp": "081456789012",
+        "alamat": "Jl. Jend. Sudirman No.4, Jakarta",
+        "tanggal_bergabung": "2025-01-20"
+    },
+    {
+        "kode": "MB005",
+        "nama": "Tia Kartika",
+        "kode_jenis_member": "JM0002",
+        "email": "tia5@gmail.com",
+        "no_hp": "081567890123",
+        "alamat": "Jl. Jend. Sudirman No.5, Jakarta",
+        "tanggal_bergabung": "2025-01-20"
+    },
+    {
+        "kode": "MB006",
+        "nama": "Rizki Ramadhan",
+        "kode_jenis_member": "JM0003",
+        "email": "rizki6@gmail.com",
+        "no_hp": "081678901234",
+        "alamat": "Jl. Jend. Sudirman No.6, Jakarta",
+        "tanggal_bergabung": "2025-01-20"
+    },
+    {
+        "kode": "MB007",
+        "nama": "Novi Amelia",
+        "kode_jenis_member": "JM0001",
+        "email": "novi7@gmail.com",
+        "no_hp": "081789012345",
+        "alamat": "Jl. Jend. Sudirman No.7, Jakarta",
+        "tanggal_bergabung": "2025-01-20"
+    },
+    {
+        "kode": "MB008",
+        "nama": "Eko Wahyu",
+        "kode_jenis_member": "JM0002",
+        "email": "eko8@gmail.com",
+        "no_hp": "081890123456",
+        "alamat": "Jl. Jend. Sudirman No.8, Jakarta",
+        "tanggal_bergabung": "2025-01-20"
+    },
+    {
+        "kode": "MB009",
+        "nama": "Siti Aminah",
+        "kode_jenis_member": "JM0003",
+        "email": "siti9@gmail.com",
+        "no_hp": "081901234567",
+        "alamat": "Jl. Jend. Sudirman No.9, Jakarta",
+        "tanggal_bergabung": "2025-01-20"
+    },
+    {
+        "kode": "MB010",
+        "nama": "Muhammad Ridwan",
+        "kode_jenis_member": "JM0001",
+        "email": "ridwan10@gmail.com",
+        "no_hp": "081012345678",
+        "alamat": "Jl. Jend. Sudirman No.10, Jakarta",
+        "tanggal_bergabung": "2025-01-20"
+    }
+]
+

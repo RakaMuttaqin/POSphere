@@ -1,0 +1,73 @@
+[
+    {
+        "kode": "PJ0001",
+        "user_id": 3,
+        "kode_member": "MB001",
+        "total": 0,
+        "tanggal": "2025-03-01"
+    },
+    {
+        "kode": "PJ0002",
+        "user_id": 5,
+        "kode_member": "MB002",
+        "total": 0,
+        "tanggal": "2025-03-02"
+    },
+    {
+        "kode": "PJ0003",
+        "user_id": 2,
+        "kode_member": "MB003",
+        "total": 0,
+        "tanggal": "2025-03-03"
+    },
+    {
+        "kode": "PJ0004",
+        "user_id": 4,
+        "kode_member": "MB001",
+        "total": 0,
+        "tanggal": "2025-03-04"
+    },
+    {
+        "kode": "PJ0005",
+        "user_id": 1,
+        "kode_member": "MB005",
+        "total": 0,
+        "tanggal": "2025-03-05"
+    },
+    {
+        "kode": "PJ0006",
+        "user_id": 3,
+        "kode_member": "MB003",
+        "total": 0,
+        "tanggal": "2025-03-06"
+    },
+    {
+        "kode": "PJ0007",
+        "user_id": 5,
+        "kode_member": "MB002",
+        "total": 0,
+        "tanggal": "2025-03-07"
+    },
+    {
+        "kode": "PJ0008",
+        "user_id": 2,
+        "kode_member": "MB004",
+        "total": 0,
+        "tanggal": "2025-03-08"
+    },
+    {
+        "kode": "PJ0009",
+        "user_id": 4,
+        "kode_member": "MB001",
+        "total": 0,
+        "tanggal": "2025-03-09"
+    },
+    {
+        "kode": "PJ0010",
+        "user_id": 1,
+        "kode_member": "MB005",
+        "total": 0,
+        "tanggal": "2025-03-10"
+    }
+]
+

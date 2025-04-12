@@ -1,0 +1,23 @@
+[
+    {
+      "kode": "BATCH0001",
+      "kode_barang": "BR0001",
+      "stok": 20,
+      "tanggal_produksi": "2025-02-20",
+      "tanggal_expired": "2026-02-20"
+    },
+    {
+      "kode": "BATCH0002",
+      "kode_barang": "BR0005",
+      "stok": 10,
+      "tanggal_produksi": "2025-02-18",
+      "tanggal_expired": "2026-02-18"
+    },
+    {
+      "kode": "BATCH0003",
+      "kode_barang": "BR0003",
+      "stok": 30,
+      "tanggal_produksi": "2025-02-15",
+      "tanggal_expired": "2026-02-15"
+    }
+  ]

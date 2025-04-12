@@ -112,11 +112,14 @@ class BarangController extends Controller
 
     public function list(Request $request)
     {
-        $query = Barang::whereHas('detail_pembelian')
-            ->whereHas('batch');
+        $query = Barang::query();
+
+        if ($request->context == 'penjualan') {
+            $query->whereHas('detail_pembelian');
+        }
 
         if ($request->has('search')) {
-            $query->where(function($q) use ($request) {
+            $query->where(function ($q) use ($request) {
                 $q->where('nama', 'like', '%' . $request->search . '%')
                     ->orWhere('kode', 'like', '%' . $request->search . '%')
                     ->orWhere('barcode', 'like', '%' . $request->search . '%');
@@ -124,6 +127,9 @@ class BarangController extends Controller
         }
 
         $data = $query->with('jenis_barang', 'satuan', 'batch')->get();
-        return response()->json($data);
+        return response()->json([
+            'barang' => $data,
+            'total' => $data->count()
+        ]);
     }
 }

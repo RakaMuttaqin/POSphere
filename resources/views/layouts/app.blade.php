@@ -14,6 +14,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets') }}/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600"
         rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('app-assets') }}/vendors/css/extensions/sweetalert2.min.css">
 
     @stack('styles')
 
@@ -50,12 +51,14 @@
     <footer class="footer footer-static footer-light">
         <p class="clearfix mb-0"><span class="float-md-start d-block d-md-inline-block mt-25">COPYRIGHT &copy;
                 {{ date('Y') }}<a class="ms-25" href="https://1.envato.market/pixinvent_portfolio"
-                    target="_blank">Raka Zainal Muttaiqn</a><span class="d-none d-sm-inline-block">, All rights
+                    target="_blank">Raka Zainal Muttaqin</a><span class="d-none d-sm-inline-block">, All rights
                     Reserved</span></span><span class="float-md-end d-none d-md-block">Hand-crafted & Made with<i
                     data-feather="heart"></i></span></p>
     </footer>
     <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
     <!-- END: Footer-->
+
+    <script src="{{ asset('app-assets') }}/vendors/js/extensions/sweetalert2.all.min.js"></script>
 
     @stack('scripts')
 
@@ -68,7 +71,13 @@
                 });
             }
         })
+
+        feather.replace({
+            width: 14,
+            height: 14
+        });
     </script>
+
 </body>
 <!-- END: Body-->
 

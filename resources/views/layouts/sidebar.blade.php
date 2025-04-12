@@ -40,7 +40,7 @@
                                 </g>
                             </g>
                         </svg></span>
-                    <h2 class="brand-text">Vuexy</h2>
+                    <h2 class="brand-text">POSphere</h2>
                 </a></li>
             <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pe-0" data-bs-toggle="collapse"><i
                         class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i><i
@@ -51,28 +51,49 @@
     <div class="shadow-bottom"></div>
     <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-            <li class="active nav-item"><a class="d-flex align-items-center" href="index.html"><i
-                        data-feather="home"></i><span class="menu-title text-truncate"
-                        data-i18n="Home">Dashboard</span></a>
-            </li>
-            <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="layout"></i><span
-                        class="menu-title text-truncate" data-i18n="Page Layouts">Master Data</span><span
-                        class="badge badge-light-danger rounded-pill ms-auto me-1">2</span></a>
-                <ul class="menu-content">
-                    <li><a class="d-flex align-items-center" href="layout-collapsed-menu.html"><i
-                                data-feather="circle"></i><span class="menu-item text-truncate"
-                                data-i18n="Users">Users</span></a>
+            @php
+                $sidebarMenu = config('sidebar');
+                $userRole = auth()->user()->role;
+            @endphp
+
+            @if (!in_array($userRole, ['Kasir']))
+                <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }} nav-item">
+                    <a class="d-flex align-items-center" href="/">
+                        <i data-feather="home"></i>
+                        <span class="menu-title text-truncate" data-i18n="Home">Dashboard</span>
+                    </a>
+                </li>
+            @endif
+
+            @foreach ($sidebarMenu as $section)
+                @if (in_array($userRole, $section['roles']))
+                    @php
+                        $isSectionActive = collect($section['items'])
+                            ->pluck('route')
+                            ->contains(function ($routeName) {
+                                return request()->routeIs($routeName);
+                            });
+                    @endphp
+                    <li class="nav-item {{ $isSectionActive ? 'open' : '' }}">
+                        <a href="#" class="d-flex align-items-center">
+                            <i data-feather="{{ $section['icon'] }}"></i>
+                            <span class="menu-title text-truncate">{{ $section['title'] }}</span>
+                        </a>
+                        <ul class="menu-content">
+                            @foreach ($section['items'] as $item)
+                                @if (in_array($userRole, $item['roles']))
+                                    <li class=" {{ request()->routeIs($item['route']) ? 'active' : '' }} nav-item">
+                                        <a href="{{ route($item['route']) }}" class="d-flex align-items-center">
+                                            <i data-feather="{{ $item['icon'] }}"></i>
+                                            <span class="menu-item text-truncate">{{ $item['title'] }}</span>
+                                        </a>
+                                    </li>
+                                @endif
+                            @endforeach
+                        </ul>
                     </li>
-                    <li><a class="d-flex align-items-center" href="layout-full.html"><i data-feather="circle"></i><span
-                                class="menu-item text-truncate" data-i18n="Jenis Barang">Jenis Barang</span></a>
-                    </li>
-                </ul>
-            </li>
-            {{-- <li class=" nav-item"><a class="d-flex align-items-center" href="index.html"><i
-                        data-feather=""></i><span class="menu-title text-truncate"
-                        data-i18n="Home">Home</span></a>
-            </li> --}}
-        </ul>
+                @endif
+            @endforeach
     </div>
 </div>
 <!-- END: Main Menu-->

@@ -11,7 +11,12 @@ class DetailPembelian extends Model
     use HasFactory;
 
     protected $table = 'detail_pembelian';
+
+    public $timestamps = false;
+
     protected $primaryKey = 'kode';
+
+    protected $keyType = 'string';
 
     public $incrementing = false;
 
@@ -19,18 +24,19 @@ class DetailPembelian extends Model
         'kode',
         'kode_pembelian',
         'kode_barang',
+        'jumlah',
         'harga_beli',
         'harga_jual',
-        'jumlah',
+        'subtotal'
     ];
-
-    public function barang()
-    {
-        return $this->belongsTo(Barang::class, 'kode_barang', 'kode');
-    }
 
     public function pembelian()
     {
-        return $this->belongsTo(Pembelian::class, 'kode_pembelian', 'kode');
+        return $this->belongsTo(Pembelian::class, 'kode_pembelian');
+    }
+
+    public function barang()
+    {
+        return $this->belongsTo(Barang::class, 'kode_barang');
     }
 }

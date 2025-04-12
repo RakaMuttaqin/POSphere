@@ -1,0 +1,112 @@
+[
+    {
+      "kode": "BR0001",
+      "kode_jenis_barang": "JB0001",
+      "barcode": "8991002100011",
+      "nama": "Indomie Goreng 85g",
+      "satuan_id": 1,
+      "gambar": "indomie-goreng.jpg",
+      "harga_beli": 2800,
+      "harga_jual": 3500,
+      "pemasok_id": 1
+    },
+    {
+      "kode": "BR0002",
+      "kode_jenis_barang": "JB0002",
+      "barcode": "8991002100012",
+      "nama": "Indomie Ayam Bawang 85g",
+      "satuan_id": 2,
+      "gambar": "indomie-ayam.jpg",
+      "harga_beli": 2800,
+      "harga_jual": 3500,
+      "pemasok_id": 2
+    },
+    {
+      "kode": "BR0003",
+      "kode_jenis_barang": "JB0003",
+      "barcode": "8991002100013",
+      "nama": "Indomie Soto Mie 85g",
+      "satuan_id": 3,
+      "gambar": "indomie-soto.jpg",
+      "harga_beli": 2800,
+      "harga_jual": 3500,
+      "pemasok_id": 3
+    },
+    {
+      "kode": "BR0004",
+      "kode_jenis_barang": "JB0004",
+      "barcode": "8991002100014",
+      "nama": "Aqua 600ml",
+      "satuan_id": 4,
+      "gambar": "aqua-600ml.jpg",
+      "harga_beli": 3000,
+      "harga_jual": 4000,
+      "pemasok_id": 4
+    },
+    {
+      "kode": "BR0005",
+      "kode_jenis_barang": "JB0005",
+      "barcode": "8991002100015",
+      "nama": "Teh Botol Sosro 450ml",
+      "satuan_id": 5,
+      "gambar": "teh-sosro.jpg",
+      "harga_beli": 4500,
+      "harga_jual": 6000,
+      "pemasok_id": 5
+    },
+    {
+      "kode": "BR0006",
+      "kode_jenis_barang": "JB0001",
+      "barcode": "8991002100016",
+      "nama": "Susu Ultra Milk 250ml",
+      "satuan_id": 1,
+      "gambar": "ultra-milk.jpg",
+      "harga_beli": 5000,
+      "harga_jual": 7000,
+      "pemasok_id": 6
+    },
+    {
+      "kode": "BR0007",
+      "kode_jenis_barang": "JB0002",
+      "barcode": "8991002100017",
+      "nama": "Chitato Ayam Bakar 68g",
+      "satuan_id": 2,
+      "gambar": "chitato-ayam.jpg",
+      "harga_beli": 8000,
+      "harga_jual": 10000,
+      "pemasok_id": 7
+    },
+    {
+      "kode": "BR0008",
+      "kode_jenis_barang": "JB0003",
+      "barcode": "8991002100018",
+      "nama": "SilverQueen Almond 65g",
+      "satuan_id": 3,
+      "gambar": "silverqueen.jpg",
+      "harga_beli": 13000,
+      "harga_jual": 16000,
+      "pemasok_id": 8
+    },
+    {
+      "kode": "BR0009",
+      "kode_jenis_barang": "JB0004",
+      "barcode": "8991002100019",
+      "nama": "Yakult 5 pcs",
+      "satuan_id": 4,
+      "gambar": "yakult.jpg",
+      "harga_beli": 8000,
+      "harga_jual": 10000,
+      "pemasok_id": 9
+    },
+    {
+      "kode": "BR0010",
+      "kode_jenis_barang": "JB0005",
+      "barcode": "8991002100020",
+      "nama": "Beng-Beng Share Pack",
+      "satuan_id": 5,
+      "gambar": "bengbeng.jpg",
+      "harga_beli": 15000,
+      "harga_jual": 18000,
+      "pemasok_id": 10
+    }
+  ]

@@ -11,6 +11,7 @@ class Pembelian extends Model
     use HasFactory;
 
     protected $table = 'pembelian';
+
     protected $primaryKey = 'kode';
 
     public $incrementing = false;

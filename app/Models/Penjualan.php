@@ -19,6 +19,7 @@ class Penjualan extends Model
     protected $fillable = [
         'kode',
         'user_id',
+        'kode_member',
         'total',
         'tanggal',
     ];
@@ -26,6 +27,16 @@ class Penjualan extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function member()
+    {
+        return $this->belongsTo(Member::class, 'kode_member', 'kode');
+    }
+
+    public function pembayaran()
+    {
+        return $this->hasMany(Pembayaran::class, 'kode_penjualan', 'kode');
     }
 
     public function detail_penjualan()

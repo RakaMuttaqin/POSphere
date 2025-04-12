@@ -1,0 +1,34 @@
+[
+    {
+      "kode": "JB001",
+      "nama": "Minyak"
+    },
+    {
+      "kode": "JB002",
+      "nama": "Mie"
+    },
+    {
+      "kode": "JB003",
+      "nama": "Minuman Kopi"
+    },
+    {
+      "kode": "JB004",
+      "nama": "Snack"
+    },
+    {
+      "kode": "JB005",
+      "nama": "Detergent"
+    },
+    {
+      "kode": "JB006",
+      "nama": "Gula"
+    },
+    {
+      "kode": "JB007",
+      "nama": "Minuman Susu"
+    },
+    {
+      "kode": "JB008",
+      "nama": "Minuman Bersoda"
+    }
+  ]

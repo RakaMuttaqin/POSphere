@@ -1,0 +1,29 @@
+[
+    {
+      "kode": "PB0001",
+      "user_id": 1,
+      "pemasok_id": 2,
+      "total": 150000,
+      "tanggal_terima": "2025-03-01",
+      "tanggal_masuk": "2025-03-02",
+      "keterangan": "Pembelian rutin bulan Maret"
+    },
+    {
+      "kode": "PB0002",
+      "user_id": 2,
+      "pemasok_id": 3,
+      "total": 200000,
+      "tanggal_terima": "2025-03-03",
+      "tanggal_masuk": "2025-03-04",
+      "keterangan": "Stok tambahan Indomie"
+    },
+    {
+      "kode": "PB0003",
+      "user_id": 3,
+      "pemasok_id": 1,
+      "total": 100000,
+      "tanggal_terima": "2025-03-05",
+      "tanggal_masuk": "2025-03-06",
+      "keterangan": "Stok minuman dingin"
+    }
+  ]

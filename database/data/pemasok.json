@@ -1,0 +1,122 @@
+[
+    {
+      "nama": "Indofood CBP Sukses Makmur",
+      "email": "contact@indofood.co.id",
+      "no_hp": "+62 21 5795 8822",
+      "alamat": "Jl. Jend. Sudirman Kav. 76-78, Jakarta, Indonesia"
+    },
+    {
+      "nama": "Mayora Indah Tbk",
+      "email": "info@mayora.co.id",
+      "no_hp": "+62 21 8063 3000",
+      "alamat": "Jl. Daan Mogot KM 18, Jakarta, Indonesia"
+    },
+    {
+      "nama": "Wings Group Indonesia",
+      "email": "cs@wings.co.id",
+      "no_hp": "+62 21 8000 888",
+      "alamat": "Jl. Tipar Cakung No. 42, Jakarta, Indonesia"
+    },
+    {
+      "nama": "Unilever Indonesia",
+      "email": "support@unilever.co.id",
+      "no_hp": "+62 21 5262 666",
+      "alamat": "Jl. BSD Boulevard Barat No. 27, Tangerang, Indonesia"
+    },
+    {
+      "nama": "Nestlé Indonesia",
+      "email": "customer@id.nestle.com",
+      "no_hp": "+62 21 2956 0600",
+      "alamat": "Perkantoran Hijau Arkadia Tower B, Jakarta, Indonesia"
+    },
+    {
+      "nama": "GarudaFood",
+      "email": "info@garudafood.com",
+      "no_hp": "+62 21 2960 5000",
+      "alamat": "Jl. Bintaro Raya No. 10, Jakarta, Indonesia"
+    },
+    {
+      "nama": "Coca-Cola Europacific Partners Indonesia",
+      "email": "customer@coca-cola.co.id",
+      "no_hp": "+62 21 8378 1234",
+      "alamat": "Jl. Teuku Umar No. 9, Jakarta, Indonesia"
+    },
+    {
+      "nama": "Danone Indonesia",
+      "email": "cs@danone.co.id",
+      "no_hp": "+62 21 2996 1000",
+      "alamat": "The Plaza Office Tower, Jakarta, Indonesia"
+    },
+    {
+      "nama": "Frisian Flag Indonesia",
+      "email": "support@frisianflag.com",
+      "no_hp": "+62 21 4711 111",
+      "alamat": "Jl. Raya Bogor KM 26, Jakarta, Indonesia"
+    },
+    {
+      "nama": "PT Ultra Jaya Milk Industry",
+      "email": "info@ultrajaya.co.id",
+      "no_hp": "+62 22 600 6000",
+      "alamat": "Jl. Raya Cimareme No. 131, Bandung, Indonesia"
+    },
+    {
+      "nama": "PepsiCo International",
+      "email": "support@pepsico.com",
+      "no_hp": "+1 914 253 2000",
+      "alamat": "700 Anderson Hill Road, Purchase, New York, USA"
+    },
+    {
+      "nama": "Procter & Gamble (P&G)",
+      "email": "customer@pg.com",
+      "no_hp": "+1 513 983 1100",
+      "alamat": "One Procter & Gamble Plaza, Cincinnati, USA"
+    },
+    {
+      "nama": "Mars Incorporated",
+      "email": "contact@mars.com",
+      "no_hp": "+1 703 821 4900",
+      "alamat": "6885 Elm Street, McLean, Virginia, USA"
+    },
+    {
+      "nama": "Mondelez International",
+      "email": "consumer@mondelezinternational.com",
+      "no_hp": "+1 847 943 4000",
+      "alamat": "905 West Fulton Market, Chicago, USA"
+    },
+    {
+      "nama": "Ferrero Group",
+      "email": "info@ferrero.com",
+      "no_hp": "+39 0173 2951",
+      "alamat": "Piazzale Pietro Ferrero, 1, Alba, Italy"
+    },
+    {
+      "nama": "Hershey Company",
+      "email": "support@hersheys.com",
+      "no_hp": "+1 717 534 4200",
+      "alamat": "19 East Chocolate Avenue, Hershey, Pennsylvania, USA"
+    },
+    {
+      "nama": "Kellogg's",
+      "email": "contact@kelloggs.com",
+      "no_hp": "+1 800 962 1413",
+      "alamat": "One Kellogg Square, Battle Creek, Michigan, USA"
+    },
+    {
+      "nama": "Heinz Kraft Company",
+      "email": "support@kraftheinzcompany.com",
+      "no_hp": "+1 412 456 5700",
+      "alamat": "200 East Randolph Street, Chicago, USA"
+    },
+    {
+      "nama": "Lotte Confectionery",
+      "email": "info@lotteconf.co.kr",
+      "no_hp": "+82 2 709 6114",
+      "alamat": "10, Tongil-ro, Jung-gu, Seoul, South Korea"
+    },
+    {
+      "nama": "Meiji Holdings",
+      "email": "cs@meiji.co.jp",
+      "no_hp": "+81 3 3273 4001",
+      "alamat": "4-16, Kyobashi 2-chome, Chuo-ku, Tokyo, Japan"
+    }
+  ]

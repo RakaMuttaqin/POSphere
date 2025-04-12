@@ -17,7 +17,7 @@ class SatuanFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nama' => fake()->unique()->randomElement(['Pcs', 'Lusin', 'Box'])
         ];
     }
 }

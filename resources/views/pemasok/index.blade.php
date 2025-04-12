@@ -94,7 +94,7 @@
                                             <i data-feather="edit"></i>
                                         </button>
 
-                                        <form action="{{ route('jenis-barang.destroy', $item->id) }}" method="POST"
+                                        <form action="{{ route('pemasok.destroy', $item->id) }}" method="POST"
                                             class="d-inline delete-form">
                                             @csrf
                                             @method('DELETE')

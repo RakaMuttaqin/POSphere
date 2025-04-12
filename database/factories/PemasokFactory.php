@@ -17,7 +17,10 @@ class PemasokFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nama' => fake()->company(),
+            'email' => fake()->companyEmail(),
+            'no_hp' => fake()->randomNumber(11),
+            'alamat' => fake()->unique()->address()
         ];
     }
 }

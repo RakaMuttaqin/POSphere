@@ -46,7 +46,7 @@ class SatuanController extends Controller
 
     public function destroy($id)
     {
-        $satuan = Satuan::where('id', $id)->first();
+        $satuan = Satuan::with('barang')->where('id', $id)->first();
 
         if ($satuan->barang()->exists()) {
             return back()->with('error', 'Satuan tidak dapat dihapus karena memiliki relasi dengan data lain.');

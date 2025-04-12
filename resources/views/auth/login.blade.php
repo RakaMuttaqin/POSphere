@@ -164,7 +164,33 @@
 
     <!-- BEGIN: Page JS-->
     <script src="{{ asset('app-assets') }}/js/scripts/pages/auth-login.js"></script>
+    <script src="{{ asset('app-assets') }}/vendors/js/extensions/sweetalert2.all.min.js"></script>
+
     <!-- END: Page JS-->
+
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                toast: true,
+                position: 'top',
+                text: @json(session('success')),
+                showConfirmButton: false,
+                timer: 3000
+            });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                toast: true,
+                position: 'top',
+                text: @json(session('error')),
+                showConfirmButton: false,
+                timer: 3000
+            });
+        </script>
+    @endif
 
     <script>
         $(window).on('load', function() {

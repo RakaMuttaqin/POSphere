@@ -11,7 +11,7 @@ class StorePenjualanRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class StorePenjualanRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'kode_member' => 'nullable|exists:member,kode',
+            'details' => 'required|array|min:1',
         ];
     }
 }
