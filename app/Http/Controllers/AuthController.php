@@ -7,11 +7,19 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    /**
+     * Fungsi ini digunakan untuk menampilkan halaman login.
+     */
     public function index()
     {
         return view('auth.login');
     }
 
+    /**
+     * Fungsi ini digunakan untuk memproses login user.
+     * Jika login berhasil, maka akan redirect ke halaman dashboard.
+     * Jika login gagal, maka akan redirect ke halaman login kembali dengan pesan error.
+     */
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -22,6 +30,10 @@ class AuthController extends Controller
         return redirect()->back()->with('error', 'Password atau email anda salah.');
     }
 
+    /**
+     * Fungsi ini digunakan untuk logout user.
+     * Jika logout berhasil, maka akan redirect ke halaman login.
+     */
     public function logout(Request $request)
     {
         Auth::logout();

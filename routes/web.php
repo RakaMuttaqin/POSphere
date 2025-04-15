@@ -37,6 +37,12 @@ Route::group(['middleware' => 'auth'], function () {
         'middleware' => 'checkrole:SuperAdmin,Admin'
     ], function () {
         Route::get('/', [AuthController::class, 'index'])->name('users.index');
+        Route::post('/', [AuthController::class, 'store'])->name('users.store');
+        Route::put('edit/{id}', [AuthController::class, 'update'])->name('users.update');
+        Route::delete('delete/{id}', [AuthController::class, 'destroy'])->name('users.destroy');
+        Route::patch('change-password/{id}', [AuthController::class, 'changePassword'])->name('users.change-password');
+        Route::get('profile', [AuthController::class, 'profile'])->name('users.profile');
+        Route::patch('profile/{id}', [AuthController::class, 'changeUsername'])->name('users.change-username');
     });
 
     // Pemasok

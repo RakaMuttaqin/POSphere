@@ -10,11 +10,15 @@ use App\Models\Batch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Mike42\Escpos\PrintConnectors\FilePrintConnector;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\Printer;
 
 class PenjualanController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Fungsi ini menampilkan daftar sumber daya.
      */
     public function index()
     {
@@ -23,6 +27,14 @@ class PenjualanController extends Controller
         return view('penjualan.index')->with($data);
     }
 
+    /**
+     * Fungsi ini menyimpan data penjualan baru ke dalam basis data, termasuk
+     * detail penjualan, pembaruan stok, dan pembayaran. Setelah itu, mencetak
+     * faktur penjualan menggunakan printer POS.
+     *
+     * @param  \App\Http\Requests\StorePenjualanRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(StorePenjualanRequest $request)
     {
         $validated = $request->validated();
@@ -65,9 +77,85 @@ class PenjualanController extends Controller
                 'total' => $penjualan->detail_penjualan()->sum('subtotal'),
             ]);
 
+            $jumlah_bayar = $validated['jumlah_bayar'];
+            if ($jumlah_bayar > $penjualan->total) {
+                $kembalian = $jumlah_bayar - $penjualan->total;
+                $penjualan->pembayaran()->create([
+                    'kode' => $penjualan->kode . ' ' . str_pad($penjualan->pembayaran()->count() + 1, 4, '0', STR_PAD_LEFT),
+                    'kode_penjualan' => $penjualan->kode,
+                    'total_bayar' => $jumlah_bayar,
+                    'kembalian' => $kembalian,
+                    'metode_pembayaran' => 'Cash',
+                    'tanggal_bayar' => now(),
+                ]);
+            }
+
+            try {
+                $connector = new WindowsPrintConnector("POS-58");
+                $printer = new Printer($connector);
+
+                // Header toko
+                $printer->setJustification(Printer::JUSTIFY_CENTER);
+                $printer->text("POSPHERE\n");
+                $printer->text("Jl. Bambu\n");
+                $printer->text("Kota Bandung\n");
+                $printer->text("Telp. 022-2222222\n");
+                $printer->text("------------------------------\n");
+                $printer->text("FAKTUR PENJUALAN\n");
+                $printer->text("------------------------------\n");
+
+                // Info transaksi
+                $printer->setJustification(Printer::JUSTIFY_LEFT);
+                $printer->text("Kode      : " . $penjualan->kode . "\n");
+                $printer->text("Tanggal   : " . now()->format('Y-m-d') . "\n");
+                $printer->text("Kasir     : " . Auth::user()->name . "\n");
+                $printer->text("Metode    : " . $penjualan->pembayaran->first()->metode_pembayaran . "\n");
+                $printer->text("------------------------------\n");
+
+                // Detail barang
+                foreach ($penjualan->detail_penjualan as $detail) {
+                    $nama = $detail->barang->nama;
+                    $jumlah = $detail->jumlah;
+                    $harga = number_format($detail->harga_jual, 0, ',', '.');
+                    $subtotal = number_format($detail->subtotal, 0, ',', '.');
+
+                    // Nama Barang (maks 32 karakter biar nggak kepotong)
+                    $printer->text(substr($nama, 0, 32) . "\n");
+
+                    // Format: 2x12000        24.000
+                    $left = $jumlah . " x " . $harga;
+                    $right = $subtotal;
+                    $printer->text(str_pad($left, 20) . str_pad("Rp" . $right, 12, ' ', STR_PAD_LEFT) . "\n");
+                }
+
+                $printer->text("------------------------------\n");
+
+                // Total pembayaran
+                $total = number_format($penjualan->total, 0, ',', '.');
+                $bayar = number_format($validated['jumlah_bayar'], 0, ',', '.');
+                $kembali = number_format($penjualan->pembayaran->first()->kembalian, 0, ',', '.');
+
+                $printer->setEmphasis(true);
+                $printer->text("TOTAL      : Rp" . $total . "\n");
+                $printer->text("BAYAR      : Rp" . $bayar . "\n");
+                $printer->text("KEMBALIAN  : Rp" . $kembali . "\n");
+                $printer->setEmphasis(false);
+
+                $printer->text("------------------------------\n");
+                $printer->setJustification(Printer::JUSTIFY_CENTER);
+                $printer->text("~ TERIMA KASIH ~\n");
+                $printer->text("Barang yang sudah dibeli\n");
+                $printer->text("tidak dapat dikembalikan.\n");
+
+                $printer->pulse();
+                $printer->cut();
+                $printer->close();
+            } catch (\Throwable $th) {
+                Log::error($th->getMessage());
+                return back()->with('error', 'Penjualan gagal: ' . $th->getMessage());
+            }
 
             DB::commit();
-
             return redirect()->back()->with(['success' => 'Penjualan berhasil disimpan.', 'faktur_kode' => $penjualan->kode]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -76,26 +164,14 @@ class PenjualanController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Menghitung jumlah penjualan, pendapatan, dan keuntungan perhari
+     * dalam 1 bulan terakhir.
+     *
+     * Fungsi ini digunakan untuk membuat laporan penjualan
+     * di halaman dashboard.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function show(Penjualan $penjualan)
-    {
-        //
-    }
-
-    public function update(UpdatePenjualanRequest $request, Penjualan $penjualan)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Penjualan $penjualan)
-    {
-        //
-    }
-
     public function count()
     {
         $penjualan = Penjualan::selectRaw(
@@ -121,6 +197,15 @@ class PenjualanController extends Controller
         ]);
     }
 
+
+    /**
+     * Menampilkan laporan penjualan dalam rentang tanggal tertentu.
+     * Fungsi ini digunakan untuk membuat laporan penjualan
+     * di halaman laporan.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function laporan(Request $request)
     {
         $tanggal_awal = $request->query('tanggal_awal') ?? now()->subMonth()->format('Y-m-d');
@@ -136,11 +221,5 @@ class PenjualanController extends Controller
         $data['tanggal_akhir'] = $tanggal_akhir;
 
         return view('laporan.penjualan')->with($data);
-    }
-
-    public function faktur($id)
-    {
-        $data['penjualan'] = Penjualan::with(['detail_penjualan', 'user', 'member'])->find($id);
-        return view('penjualan.faktur')->with($data);
     }
 }

@@ -23,6 +23,7 @@ class StorePenjualanRequest extends FormRequest
     {
         return [
             'kode_member' => 'nullable|exists:member,kode',
+            'jumlah_bayar' => 'required|numeric|min:1',
             'details' => 'required|array|min:1',
         ];
     }

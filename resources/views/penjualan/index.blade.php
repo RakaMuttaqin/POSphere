@@ -141,9 +141,14 @@
                                 <div class="mb-1">
                                     <label for="total_bayar" class="form-label fw-semibold">Total Bayar:</label>
                                     <input type="number" class="form-control w-40 text-end d-inline-block"
-                                        id="total_bayar" placeholder="Rp 0,00" oninput="hitungKembalian()">
+                                        id="total_bayar" placeholder="Rp 0,00" name="jumlah_bayar"
+                                        oninput="hitungKembalian()">
                                 </div>
-                                <p class="form-label mb-1">Kembalian: <span id="kembalian">Rp 0,00</span></p>
+                                <div class="mb-1">
+                                    <label for="kembalian" class="form-label fw-semibold">Kembalian:</label>
+                                    <input type="text" class="form-control w-40 text-end d-inline-block"
+                                        id="kembalian" placeholder="Rp 0,00" readonly>
+                                </div>
                                 <button type="submit" class="btn btn-success">Proses Penjualan</button>
                             </div>
                         </div>
@@ -200,10 +205,6 @@
                 text: @json(session('success')),
                 customClass: {
                     confirmButton: 'btn btn-primary'
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.open('{{ route('penjualan.faktur', session('faktur_kode')) }}', '_blank');
                 }
             });
         </script>
@@ -329,8 +330,11 @@
                 /[^0-9,-]+/g, '').replace(',', '.')) || 0;
             const kembalian = totalBayar - totalKeseluruhan;
 
-            document.getElementById('kembalian').textContent =
-                `${Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(kembalian)}`;
+            document.getElementById('kembalian').value =
+                kembalian.toLocaleString('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR'
+                });
         }
 
         document.querySelector("form").addEventListener("submit", function(e) {

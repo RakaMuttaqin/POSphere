@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('kode')->primary();
             $table->string('kode_penjualan');
             $table->double('total_bayar');
+            $table->double('kembalian');
             $table->string('metode_pembayaran');
             $table->dateTime('tanggal_bayar');
 

@@ -20,6 +20,7 @@ class Pembayaran extends Model
         'kode',
         'kode_penjualan',
         'total_bayar',
+        'kembalian',
         'metode_pembayaran',
         'tanggal_bayar',
     ];
