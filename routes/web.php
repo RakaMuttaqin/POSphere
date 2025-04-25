@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AbsensiKerjaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\JenisBarangController;
 use App\Http\Controllers\JenisMemberController;
+use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PemasokController;
 use App\Http\Controllers\PembayaranController;
@@ -12,6 +14,7 @@ use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PengajuanBarangController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\SatuanController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -20,14 +23,14 @@ Route::post('login', [AuthController::class, 'login'])->name('cek-login');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', fn() => match (Auth::user()->role) {
-        'Admin' => redirect()->route('admin.dashboard'),
-        'Kasir' => redirect()->route('penjualan.index'),
-        'SuperAdmin' => redirect()->route('admin.dashboard'),
-        'Owner' => redirect()->route('owner.dashboard'),
-        default => redirect()->route('login'),
+        'Admin' => redirect()->Route('admin.dashboard'),
+        'Kasir' => redirect()->Route('penjualan.index'),
+        'SuperAdmin' => redirect()->Route('admin.dashboard'),
+        'Owner' => redirect()->Route('owner.dashboard'),
+        default => redirect()->Route('login'),
     });
 
-    // Dashboard routes
+    // Dashboard Routes
     Route::get('/admin/dashboard', fn() => view('dashboard.admin'))->name('admin.dashboard');
     Route::get('/owner/dashboard', fn() => view('dashboard.owner'))->name('owner.dashboard');
 
@@ -36,13 +39,24 @@ Route::group(['middleware' => 'auth'], function () {
         'prefix' => 'users',
         'middleware' => 'checkrole:SuperAdmin,Admin'
     ], function () {
-        Route::get('/', [AuthController::class, 'index'])->name('users.index');
-        Route::post('/', [AuthController::class, 'store'])->name('users.store');
-        Route::put('edit/{id}', [AuthController::class, 'update'])->name('users.update');
-        Route::delete('delete/{id}', [AuthController::class, 'destroy'])->name('users.destroy');
-        Route::patch('change-password/{id}', [AuthController::class, 'changePassword'])->name('users.change-password');
-        Route::get('profile', [AuthController::class, 'profile'])->name('users.profile');
-        Route::patch('profile/{id}', [AuthController::class, 'changeUsername'])->name('users.change-username');
+        Route::get('/', [UserController::class, 'index'])->name('users.index');
+        Route::post('/', [UserController::class, 'store'])->name('users.store');
+        Route::put('edit/{id}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+        Route::patch('change-password/{id}', [UserController::class, 'changePassword'])->name('users.change-password');
+        Route::get('profile', [UserController::class, 'profile'])->name('users.profile');
+        Route::patch('profile/{id}', [UserController::class, 'changeUsername'])->name('users.change-username');
+    });
+
+    // Karyawan
+    Route::group([
+        'prefix' => 'karyawan',
+        'middleware' => 'checkrole:SuperAdmin,Admin,Owner'
+    ], function () {
+        Route::get('/', [KaryawanController::class, 'index'])->name('karyawan.index');
+        Route::post('/', [KaryawanController::class, 'store'])->name('karyawan.store');
+        Route::patch('edit/{id}', [KaryawanController::class, 'update'])->name('karyawan.update');
+        Route::delete('delete/{id}', [KaryawanController::class, 'destroy'])->name('karyawan.destroy');
     });
 
     // Pemasok
@@ -50,10 +64,10 @@ Route::group(['middleware' => 'auth'], function () {
         'prefix' => 'pemasok',
         'middleware' => 'checkrole:SuperAdmin,Admin,Owner'
     ], function () {
-        route::get('/', [PemasokController::class, 'index'])->name('pemasok.index');
-        route::post('/', [PemasokController::class, 'store'])->name('pemasok.store');
-        route::put('edit/{id}', [PemasokController::class, 'update'])->name('pemasok.update');
-        route::delete('delete/{id}', [PemasokController::class, 'destroy'])->name('pemasok.destroy');
+        Route::get('/', [PemasokController::class, 'index'])->name('pemasok.index');
+        Route::post('/', [PemasokController::class, 'store'])->name('pemasok.store');
+        Route::put('edit/{id}', [PemasokController::class, 'update'])->name('pemasok.update');
+        Route::delete('delete/{id}', [PemasokController::class, 'destroy'])->name('pemasok.destroy');
     });
 
     // Member
@@ -104,7 +118,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Barang
     Route::group([
         'prefix' => 'barang',
-        'middleware' => 'checkrole:SuperAdmin,Admin'
+        'middleware' => 'checkrole:SuperAdmin,Admin,Owner,Kasir'
     ], function () {
         Route::get('/', [BarangController::class, 'index'])->name('barang.index');
         Route::post('/', [BarangController::class, 'store'])->name('barang.store');
@@ -116,7 +130,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Batch
     Route::group([
         'prefix' => 'batch',
-        'middleware' => 'checkrole:SuperAdmin,Admin'
+        'middleware' => 'checkrole:SuperAdmin,Admin,Owner'
     ], function () {
         Route::get('/', [BatchController::class, 'index'])->name('batch.index');
         Route::post('/', [BatchController::class, 'store'])->name('batch.store');
@@ -128,23 +142,23 @@ Route::group(['middleware' => 'auth'], function () {
     // Pembelian
     Route::group([
         'prefix' => 'pembelian',
-        'middleware' => 'checkrole:SuperAdmin,Admin'
+        'middleware' => 'checkrole:SuperAdmin,Admin,Owner'
     ], function () {
-        route::get('/', [PembelianController::class, 'index'])->name('pembelian.index');
-        route::post('/', [PembelianController::class, 'store'])->name('pembelian.store');
-        route::get('detail/{id}', [PembelianController::class, 'detail'])->name('pembelian.detail');
+        Route::get('/', [PembelianController::class, 'index'])->name('pembelian.index');
+        Route::post('/', [PembelianController::class, 'store'])->name('pembelian.store');
+        Route::get('detail/{id}', [PembelianController::class, 'detail'])->name('pembelian.detail');
     });
 
     // Penjualan
     Route::group([
         'prefix' => 'penjualan',
-        'middleware' => 'checkrole:SuperAdmin,Admin,Kasir'
+        'middleware' => 'checkrole:SuperAdmin,Admin,Kasir,Owner'
     ], function () {
-        route::get('/', [PenjualanController::class, 'index'])->name('penjualan.index');
-        route::post('/', [PenjualanController::class, 'store'])->name('penjualan.store');
-        route::get('detail/{id}', [PenjualanController::class, 'detail'])->name('penjualan.detail');
-        route::get('count', [PenjualanController::class, 'count'])->name('penjualan.count');
-        route::get('/faktur/{id}', [PenjualanController::class, 'faktur'])->name('penjualan.faktur');
+        Route::get('/', [PenjualanController::class, 'index'])->name('penjualan.index');
+        Route::post('/', [PenjualanController::class, 'store'])->name('penjualan.store');
+        Route::get('detail/{id}', [PenjualanController::class, 'detail'])->name('penjualan.detail');
+        Route::get('count', [PenjualanController::class, 'count'])->name('penjualan.count');
+        Route::get('/faktur/{id}', [PenjualanController::class, 'faktur'])->name('penjualan.faktur');
     });
 
     // Pembayaran
@@ -152,8 +166,8 @@ Route::group(['middleware' => 'auth'], function () {
         'prefix' => 'pembayaran',
         'middleware' => 'checkrole:SuperAdmin,Admin,Kasir'
     ], function () {
-        route::get('/', [PembayaranController::class, 'index'])->name('pembayaran.index');
-        route::post('/', [PembayaranController::class, 'store'])->name('pembayaran.store');
+        Route::get('/', [PembayaranController::class, 'index'])->name('pembayaran.index');
+        Route::post('/', [PembayaranController::class, 'store'])->name('pembayaran.store');
     });
 
     // Laporan
@@ -163,6 +177,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('laporan-pembelian', [PembelianController::class, 'laporan'])->name('laporan-pembelian.index');
         Route::get('laporan-penjualan', [PenjualanController::class, 'laporan'])->name('laporan-penjualan.index');
         Route::get('laporan-stok', [BatchController::class, 'laporan'])->name('laporan-stok.index');
+        Route::get('laporan-barang', [BarangController::class, 'laporan'])->name('laporan-barang.index');
     });
 
     // Pengajuan Barang
@@ -178,6 +193,23 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('delete/{id}', [PengajuanBarangController::class, 'destroy'])->name('pengajuan-barang.destroy');
         Route::get('export', [PengajuanBarangController::class, 'export'])->name('pengajuan-barang.export');
         Route::get('exportPDF', [PengajuanBarangController::class, 'generatePDF'])->name('pengajuan-barang.exportPDF');
+    });
+
+    // Absensi Kerja
+    Route::group([
+        'prefix' => 'absensi-kerja',
+        'middleware' => 'checkrole:SuperAdmin,Admin,Owner'
+    ], function () {
+        Route::get('/', [AbsensiKerjaController::class, 'index'])->name('absensi-kerja.index');
+        Route::post('/', [AbsensiKerjaController::class, 'store'])->name('absensi-kerja.store');
+        Route::patch('edit/{id}', [AbsensiKerjaController::class, 'update'])->name('absensi-kerja.update');
+        Route::patch('edit-status/{id}', [AbsensiKerjaController::class, 'updateStatus'])->name('absensi-kerja.updateStatus');
+        Route::patch('edit-selesai/{id}', [AbsensiKerjaController::class, 'updateSelesai'])->name('absensi-kerja.updateSelesai');
+        Route::delete('delete/{id}', [AbsensiKerjaController::class, 'destroy'])->name('absensi-kerja.destroy');
+        Route::get('exportExcel', [AbsensiKerjaController::class, 'exportExcel'])->name('absensi-kerja.exportExcel');
+        Route::get('formatImport', [AbsensiKerjaController::class, 'formatImport'])->name('absensi-kerja.formatImport');
+        Route::get('exportPDF', [AbsensiKerjaController::class, 'exportPDF'])->name('absensi-kerja.exportPDF');
+        Route::post('import', [AbsensiKerjaController::class, 'import'])->name('absensi-kerja.import');
     });
 
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');

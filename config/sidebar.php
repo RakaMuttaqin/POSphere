@@ -6,7 +6,8 @@ return [
         'icon' => 'database',
         'roles' => ['SuperAdmin', 'Admin'],
         'items' => [
-            // ['title' => 'User', 'route' => 'users.index', 'icon' => 'circle', 'roles' => ['SuperAdmin', 'Admin']],
+            ['title' => 'User', 'route' => 'users.index', 'icon' => 'circle', 'roles' => ['SuperAdmin', 'Admin']],
+            ['title' => 'Karyawan', 'route' => 'karyawan.index', 'icon' => 'circle', 'roles' => ['SuperAdmin', 'Admin', 'Owner']],
             ['title' => 'Pemasok', 'route' => 'pemasok.index', 'icon' => 'circle', 'roles' => ['SuperAdmin', 'Admin', 'Owner']],
             ['title' => 'Satuan', 'route' => 'satuan.index', 'icon' => 'circle', 'roles' => ['SuperAdmin', 'Admin']],
             ['title' => 'Jenis Barang', 'route' => 'jenis-barang.index', 'icon' => 'circle', 'roles' => ['SuperAdmin', 'Admin']],
@@ -15,7 +16,7 @@ return [
     [
         'title' => 'Keanggotaan',
         'icon' => 'users',
-        'roles' => ['SuperAdmin', 'Admin'],
+        'roles' => ['SuperAdmin', 'Admin', 'Kasir'],
         'items' => [
             ['title' => 'Jenis Member', 'route' => 'jenis-member.index', 'icon' => 'circle', 'roles' => ['SuperAdmin', 'Admin']],
             ['title' => 'Member', 'route' => 'member.index', 'icon' => 'circle', 'roles' => ['SuperAdmin', 'Admin', 'Kasir']],
@@ -42,6 +43,14 @@ return [
         ],
     ],
     [
+        'title' => 'Absensi',
+        'icon' => 'clock',
+        'roles' => ['SuperAdmin', 'Admin', 'Owner'],
+        'items' => [
+            ['title' => 'Absensi Kerja', 'route' => 'absensi-kerja.index', 'icon' => 'circle', 'roles' => ['SuperAdmin', 'Admin', 'Owner']],
+        ]
+    ],
+    [
         'title' => 'Pengajuan',
         'icon' => 'clipboard',
         'roles' => ['SuperAdmin', 'Admin', 'Kasir'],
@@ -57,6 +66,7 @@ return [
             ['title' => 'Laporan Penjualan', 'route' => 'laporan-penjualan.index', 'icon' => 'circle', 'roles' => ['SuperAdmin', 'Admin', 'Owner']],
             // ['title' => 'Laporan Pembelian', 'route' => 'laporan-pembelian.index', 'icon' => 'circle', 'roles' => ['SuperAdmin', 'Admin', 'Owner']],
             // ['title' => 'Laporan Stok Barang', 'route' => 'laporan-stok.index', 'icon' => 'circle', 'roles' => ['SuperAdmin', 'Admin', 'Owner']],
+            ['title' => 'Laporan Barang', 'route' => 'laporan-barang.index', 'icon' => 'circle', 'roles' => ['SuperAdmin', 'Admin', 'Owner']],
         ],
     ],
 ];

@@ -1,34 +1,42 @@
 [
     {
       "kode": "JB001",
-      "nama": "Minyak"
+      "nama": "Minyak Goreng"
     },
     {
       "kode": "JB002",
-      "nama": "Mie"
+      "nama": "Mie Instant"
     },
     {
       "kode": "JB003",
-      "nama": "Minuman Kopi"
+      "nama": "Minuman Kopi Kemasan"
     },
     {
       "kode": "JB004",
-      "nama": "Snack"
+      "nama": "Snack Ringan"
     },
     {
       "kode": "JB005",
-      "nama": "Detergent"
+      "nama": "Detergent Cair"
     },
     {
       "kode": "JB006",
-      "nama": "Gula"
+      "nama": "Gula Pasir"
     },
     {
       "kode": "JB007",
-      "nama": "Minuman Susu"
+      "nama": "Minuman Susu Kemasan"
     },
     {
       "kode": "JB008",
-      "nama": "Minuman Bersoda"
+      "nama": "Minuman Bersoda Kemasan"
+    },
+    {
+      "kode": "JB009",
+      "nama": "Beras"
+    },
+    {
+      "kode": "JB010",
+      "nama": "Air Mineral"
     }
   ]

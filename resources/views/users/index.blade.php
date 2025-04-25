@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @push('title')
-    Member
+    - Users
 @endpush
 @push('styles')
     <link rel="apple-touch-icon" href="{{ asset('app-assets') }}/images/ico/apple-icon-120.png">
@@ -51,9 +51,9 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Home</a>
                         </li>
-                        <li class="breadcrumb-item"><a href="">Keanggotaan</a>
+                        <li class="breadcrumb-item"><a href="">Master Data</a>
                         </li>
-                        <li class="breadcrumb-item active">Member</li>
+                        <li class="breadcrumb-item active">Users</li>
                     </ol>
                 </div>
             </div>
@@ -74,7 +74,7 @@
                                 <th>Nama</th>
                                 <th>Email</th>
                                 <th>Role</th>
-                                <th>Password</th>
+                                {{-- <th>Password</th> --}}
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -85,16 +85,16 @@
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->email }}</td>
                                     <td>{{ $item->role }}</td>
-                                    <td>{{ $item->password }}</td>
+                                    {{-- <td>{{ $item->password }}</td> --}}
                                     <td>
                                         <button class="btn btn-sm edit-btn btn-primary" data-id="{{ $item->id }}"
                                             data-nama="{{ $item->name }}" data-email="{{ $item->email }}"
                                             data-role="{{ $item->role }}" data-password="{{ $item->password }}"
-                                            data-bs-target="#modalForm">
+                                            data-bs-target="#modalForm" data-bs-toggle="modal">
                                             <i data-feather="edit"></i>
                                         </button>
 
-                                        <form action="{{ route('member.destroy', $item->id) }}" method="POST"
+                                        <form action="{{ route('users.destroy', $item->id) }}" method="POST"
                                             class="d-inline delete-form">
                                             @csrf
                                             @method('DELETE')
@@ -114,7 +114,7 @@
     </section>
     <!--/ Basic table -->
 
-    @include('member.modal')
+    @include('users.modal')
 @endsection
 
 @push('scripts')
@@ -212,11 +212,14 @@
                 let role = $(this).data('role');
                 let password = $(this).data('password');
 
+                console.log('role:', role); // debug dulu
+
                 // Setel nilai di bidang formulir modal
                 $('#name').val(name).focus();
                 $('#email').val(email).focus();
-                $('#role').val(role).focus();
+                $('#role').val(role).trigger('change').focus();
                 $('#password').val(password).focus();
+                $('#password').closest('.mb-1').attr('hidden', false);
 
                 // Perbarui URL aksi formulir dengan ID item yang benar untuk diperbarui
                 $('.form-validate').attr('action', `/users/edit/${id}`);
@@ -233,6 +236,7 @@
                 $('#email').val('');
                 $('#role').val('');
                 $('#password').val('');
+                $('#password').closest('.mb-1').attr('hidden', true);
 
                 // Atur ulang aksi formulir untuk menambah data baru
                 $('.form-validate').attr('action', "{{ route('users.store') }}");
@@ -264,7 +268,7 @@
                     buttons: [{
                             text: feather.icons['plus'].toSvg({
                                 class: 'me-50 font-small-4'
-                            }) + 'Tambah member',
+                            }) + 'Tambah Users',
                             className: 'create-new btn btn-primary',
                             attr: {
                                 'data-bs-toggle': 'modal',
@@ -292,7 +296,7 @@
                                     }) + 'Print',
                                     className: 'dropdown-item',
                                     exportOptions: {
-                                        columns: [0, 1, 2, 3]
+                                        columns: [1, 2, 3, 4]
                                     } // Menyesuaikan kolom yang diekspor
                                 },
                                 {
@@ -302,7 +306,7 @@
                                     }) + 'Csv',
                                     className: 'dropdown-item',
                                     exportOptions: {
-                                        columns: [0, 1, 2, 3]
+                                        columns: [1, 2, 3, 4]
                                     }
                                 },
                                 {
@@ -312,7 +316,7 @@
                                     }) + 'Excel',
                                     className: 'dropdown-item',
                                     exportOptions: {
-                                        columns: [0, 1, 2, 3]
+                                        columns: [1, 2, 3, 4]
                                     }
                                 },
                                 {
@@ -322,7 +326,7 @@
                                     }) + 'Pdf',
                                     className: 'dropdown-item',
                                     exportOptions: {
-                                        columns: [0, 1, 2, 3]
+                                        columns: [1, 2, 3, 4]
                                     }
                                 },
                                 {
@@ -332,7 +336,7 @@
                                     }) + 'Copy',
                                     className: 'dropdown-item',
                                     exportOptions: {
-                                        columns: [0, 1, 2, 3]
+                                        columns: [1, 2, 3, 4]
                                     }
                                 }
                             ]

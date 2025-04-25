@@ -105,8 +105,7 @@
                     <div class="card mb-1">
                         <div class="card-body">
                             <label for="searchMember" class="form-label fw-semibold">Cari Member</label>
-                            <input type="search" class="form-control" id="searchMember"
-                                placeholder="Masukkan email atau no HP member...">
+                            <select class="form-select select2" id="searchMember" name="kode_member"></select>
                         </div>
                     </div>
 
@@ -261,6 +260,29 @@
                 setTimeout(() => {
                     $('#searchBarang').val(null).trigger('change');
                 }, 100);
+            });
+
+            $('#searchMember').select2({
+                width: 'resolve',
+                dropdownAutoWidth: true,
+                dropdownParent: $('#searchMember').parent(),
+                placeholder: "Masukkan email atau no HP member...",
+                allowClear: true,
+                minimumInputLength: 1,
+                ajax: {
+                    url: '/member/show',
+                    dataType: 'json',
+                    delay: 100,
+                    data: (params) => ({
+                        search: params.term,
+                    }),
+                    processResults: (data) => ({
+                        results: data.member.map((item) => ({
+                            id: item.kode,
+                            text: `${item.nama} - ${item.email ? item.email : ''} ${item.no_hp ? item.no_hp : ''}`,
+                        }))
+                    })
+                }
             });
         });
 

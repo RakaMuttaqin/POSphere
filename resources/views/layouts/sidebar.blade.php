@@ -57,7 +57,7 @@
             @endphp
 
             @if (!in_array($userRole, ['Kasir']))
-                <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }} nav-item">
+                <li class="{{ request()->routeIs('*.dashboard') ? 'active' : '' }} nav-item">
                     <a class="d-flex align-items-center" href="/">
                         <i data-feather="home"></i>
                         <span class="menu-title text-truncate" data-i18n="Home">Dashboard</span>

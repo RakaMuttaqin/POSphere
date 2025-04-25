@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @push('title')
-    Laporan Penjualan
+    - Laporan Penjualan
 @endpush
 @push('styles')
     <link rel="apple-touch-icon" href="{{ asset('app-assets') }}/images/ico/apple-icon-120.png">
@@ -51,7 +51,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Home</a>
                         </li>
-                        <li class="breadcrumb-item"><a href="">Keanggotaan</a>
+                        <li class="breadcrumb-item"><a href="">Laporan</a>
                         </li>
                         <li class="breadcrumb-item active">Laporan Penjualan</li>
                     </ol>
@@ -65,7 +65,7 @@
     <section id="filter">
         <div class="row">
             <div class="col-12">
-                <div class="card">
+                {{-- <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Filter Tanggal</h4>
                     </div>
@@ -92,7 +92,7 @@
                             </div>
                         </form>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </section>
@@ -119,12 +119,12 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->kode }}</td>
                                     <td>{{ $item->user->name }}</td>
-                                    <td>{{ $item->member->nama ?? '' }}</td>
-                                    <td>{{ $item->total }}</td>
+                                    <td>{{ $item->member->nama ?? 'Umum' }}</td>
+                                    <td>Rp {{ number_format($item->total, 0, ',', '.') }}</td>
                                     <td>{{ $item->tanggal }}</td>
                                     <td>
-                                        <button class="btn btn-sm edit-btn btn-primary" data-id="{{ $item->kode }}"
-                                            data-bs-toggle="modal" data-bs-target="#modalForm">
+                                        <button class="btn btn-sm btn-detail btn-primary" data-id="{{ $item->kode }}"
+                                            data-bs-toggle="modal" data-bs-target="#modalDetailPenjualan">
                                             <i data-feather="eye"></i>
                                         </button>
                                     </td>
@@ -138,6 +138,7 @@
         </div>
     </section>
     <!--/ Basic table -->
+    @include('laporan.modal')
 @endsection
 
 @push('scripts')
@@ -177,6 +178,77 @@
     {{-- <script src="{{ asset('app-assets') }}/js/scripts/tables/table-datatables-basic.js"></script> --}}
 
     <script>
+        $(document).ready(function() {
+            $(".btn-detail").off("click").on("click", function() {
+                let id = $(this).data("id");
+                console.log(id);
+
+                $.ajax({
+                    url: `/penjualan/detail/${id}`,
+                    method: "GET",
+                    success: function(response) {
+                        $("#modal-no-faktur").text(response.kode ?? "-");
+                        $("#modal-kasir").text(response.user.name ?? "-");
+                        $("#modal-pelanggan").text(response.member.nama ?? "Umum");
+                        $("#modal-total-penjualan").text(new Intl.NumberFormat('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                            }).format(response.total) ??
+                            "-");
+                        $("#modal-tanggal").text(response.tanggal ?? "-");
+
+                        $("#modal-dibayar").text(new Intl.NumberFormat('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        }).format(response.pembayaran[0]?.total_bayar ?? 0));
+
+                        $("#modal-kembali").text(new Intl.NumberFormat('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR'
+                        }).format(response.pembayaran[0]?.kembalian ?? 0));
+
+                        let tbody = $("#modal-detail-table-penjualan tbody");
+                        tbody.empty();
+
+                        if (response.detail_penjualan && response.detail_penjualan.length > 0) {
+                            response.detail_penjualan.forEach(detail => {
+                                let hargaJual = detail.harga_jual ?
+                                    `${new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(detail.harga_jual)}` :
+                                    "Rp -";
+
+                                let row = `
+                            <tr>
+                                <td>${detail.barang.nama ?? "-"}</td>
+                                <td>${detail.jumlah ?? "-"}</td>
+                                <td>${hargaJual}</td>
+                                <td>
+                                    ${new Intl.NumberFormat('id-ID', {
+                                        style: 'currency',
+                                        currency: 'IDR'
+                                    }).format(detail.subtotal) ?? "-"}
+                                </td>
+                            </tr>`;
+                                tbody.append(row);
+                            });
+                        } else {
+                            tbody.append(
+                                `<tr><td colspan="6" class="text-center">Tidak ada detail pembelian</td></tr>`
+                            );
+                        }
+
+                        $("#modalDetailPenjualan").modal("show");
+                    },
+                    error: function(xhr) {
+                        let message = "Gagal mengambil detail. Silakan coba lagi.";
+                        if (xhr.status === 404) {
+                            message = "Data tidak ditemukan.";
+                        }
+                        Swal.fire('Error', message, 'error');
+                    }
+                });
+            });
+        });
+
         $(document).ready(function() {
             'use strict';
 

@@ -7,6 +7,7 @@ use App\Http\Requests\StorePenjualanRequest;
 use App\Http\Requests\UpdatePenjualanRequest;
 use App\Models\Barang;
 use App\Models\Batch;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -78,6 +79,10 @@ class PenjualanController extends Controller
             ]);
 
             $jumlah_bayar = $validated['jumlah_bayar'];
+            if ($penjualan->kode_member) {
+                $diskon = $penjualan->member->jenis_member->diskon;
+                $penjualan->update(['total' => $penjualan->total - ($penjualan->total * $diskon / 100)]);
+            }
             if ($jumlah_bayar > $penjualan->total) {
                 $kembalian = $jumlah_bayar - $penjualan->total;
                 $penjualan->pembayaran()->create([
@@ -136,6 +141,7 @@ class PenjualanController extends Controller
                 $kembali = number_format($penjualan->pembayaran->first()->kembalian, 0, ',', '.');
 
                 $printer->setEmphasis(true);
+                $printer->setJustification(Printer::JUSTIFY_RIGHT);
                 $printer->text("TOTAL      : Rp" . $total . "\n");
                 $printer->text("BAYAR      : Rp" . $bayar . "\n");
                 $printer->text("KEMBALIAN  : Rp" . $kembali . "\n");
@@ -172,31 +178,36 @@ class PenjualanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function count()
+    public function count(Request $request)
     {
-        $penjualan = Penjualan::selectRaw(
-            'DATE(tanggal) as tanggal,
+        // Ambil tanggal dari query param, default ke awal dan akhir bulan ini
+        $tanggal_awal = $request->query('tanggal_awal') ?? now()->startOfMonth()->format('Y-m-d');
+        $tanggal_akhir = $request->query('tanggal_akhir') ?? now()->endOfMonth()->format('Y-m-d');
+
+        // Ambil data penjualan harian beserta total & keuntungan
+        $penjualan = Penjualan::selectRaw("
+            DATE(tanggal) as tanggal,
             COUNT(*) as penjualan,
             SUM(total) as pendapatan,
-            SUM(
-                (SELECT SUM(dp.harga_jual * dp.jumlah) - SUM(dp.harga_beli * dp.jumlah)
+            SUM((
+                SELECT SUM(dp.harga_jual * dp.jumlah) - SUM(dp.harga_beli * dp.jumlah)
                 FROM detail_penjualan dp
-                WHERE dp.kode_penjualan = penjualan.kode)
-            ) as keuntungan'
-        )
-            ->where('tanggal', '>=', now()->subMonth()) // Ambil data dalam 1 bulan terakhir
+                WHERE dp.kode_penjualan = penjualan.kode
+            )) as keuntungan
+        ")
+            ->whereBetween('tanggal', [$tanggal_awal, $tanggal_akhir])
             ->groupBy('tanggal')
             ->orderBy('tanggal', 'asc')
             ->get();
 
+        // Balikin response dalam format JSON
         return response()->json([
-            'penjualan' => $penjualan,
-            'total_penjualan' => $penjualan->sum('penjualan'),
-            'total_pendapatan' => $penjualan->sum('pendapatan'),
-            'total_keuntungan' => $penjualan->sum('keuntungan'),
+            'penjualan'         => $penjualan,
+            'total_penjualan'   => $penjualan->sum('penjualan'),
+            'total_pendapatan'  => $penjualan->sum('pendapatan'),
+            'total_keuntungan'  => $penjualan->sum('keuntungan'),
         ]);
     }
-
 
     /**
      * Menampilkan laporan penjualan dalam rentang tanggal tertentu.
@@ -204,7 +215,6 @@ class PenjualanController extends Controller
      * di halaman laporan.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function laporan(Request $request)
     {
@@ -221,5 +231,41 @@ class PenjualanController extends Controller
         $data['tanggal_akhir'] = $tanggal_akhir;
 
         return view('laporan.penjualan')->with($data);
+    }
+
+    /**
+     * Menampilkan detail penjualan berdasarkan kode penjualan.
+     *
+     * Fungsi ini digunakan untuk menampilkan detail penjualan
+     * di halaman laporan.
+     *
+     * @param  string  $id Kode penjualan
+     */
+    public function detail($id)
+    {
+        try {
+            $penjualan = Penjualan::with('user', 'detail_penjualan.barang.satuan', 'detail_penjualan.barang.jenis_barang', 'member', 'pembayaran')->where('kode', $id)->firstOrFail();
+
+            return response()->json($penjualan);
+        } catch (ModelNotFoundException $e) {
+            return redirect()->back()->with('error', 'Data penjualan tidak ditemukan');
+        }
+    }
+
+    private function getDiskon($totalPembelian): array
+    {
+        $kelipatan = $totalPembelian / 20000;
+        $poin = $kelipatan;
+
+        $diskon = $kelipatan * 2;
+
+        $totalAkhir = $totalPembelian - $diskon;
+
+        return [
+            'total' => $totalPembelian,
+            'poin' => $poin,
+            'diskon' => $diskon,
+            'total_akhir' => $totalAkhir,
+        ];
     }
 }

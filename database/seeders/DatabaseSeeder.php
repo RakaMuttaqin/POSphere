@@ -47,13 +47,13 @@ class DatabaseSeeder extends Seeder
             SatuanSeeder::class,
             PemasokSeeder::class,
             JenisMemberSeeder::class,
-            // MemberSeeder::class,
-            // BarangSeeder::class,
-            // PembelianSeeder::class,
-            // DetailPembelianSeeder::class,
-            // BatchSeeder::class,
-            // PenjualanSeeder::class,
-            // DetailPenjualanSeeder::class
+            MemberSeeder::class,
+            BarangSeeder::class,
+            PembelianSeeder::class,
+            DetailPembelianSeeder::class,
+            BatchSeeder::class,
+            PenjualanSeeder::class,
+            DetailPenjualanSeeder::class
         ]);
     }
 }

@@ -3,71 +3,210 @@
         "kode": "PJ0001",
         "user_id": 3,
         "kode_member": "MB001",
-        "total": 0,
-        "tanggal": "2025-03-01"
+        "total": 29500,
+        "tanggal": "2025-04-01T12:34:56"
     },
     {
         "kode": "PJ0002",
         "user_id": 5,
         "kode_member": "MB002",
-        "total": 0,
-        "tanggal": "2025-03-02"
+        "total": 14400,
+        "tanggal": "2025-04-02T23:12:45"
     },
     {
         "kode": "PJ0003",
         "user_id": 2,
         "kode_member": "MB003",
-        "total": 0,
-        "tanggal": "2025-03-03"
+        "total": 30000,
+        "tanggal": "2025-04-03T08:09:10"
     },
     {
         "kode": "PJ0004",
         "user_id": 4,
         "kode_member": "MB001",
-        "total": 0,
-        "tanggal": "2025-03-04"
+        "total": 15000,
+        "tanggal": "2025-04-04T14:56:37"
     },
     {
         "kode": "PJ0005",
         "user_id": 1,
         "kode_member": "MB005",
-        "total": 0,
-        "tanggal": "2025-03-05"
+        "total": 45000,
+        "tanggal": "2025-04-05T07:45:28"
     },
     {
         "kode": "PJ0006",
         "user_id": 3,
         "kode_member": "MB003",
-        "total": 0,
-        "tanggal": "2025-03-06"
+        "total": 20000,
+        "tanggal": "2025-04-06T19:23:11"
     },
     {
         "kode": "PJ0007",
         "user_id": 5,
         "kode_member": "MB002",
-        "total": 0,
-        "tanggal": "2025-03-07"
+        "total": 21000,
+        "tanggal": "2025-04-07T11:14:05"
     },
     {
         "kode": "PJ0008",
         "user_id": 2,
         "kode_member": "MB004",
-        "total": 0,
-        "tanggal": "2025-03-08"
+        "total": 48000,
+        "tanggal": "2025-04-08T15:36:59"
     },
     {
         "kode": "PJ0009",
-        "user_id": 4,
+        "user_id": 3,
         "kode_member": "MB001",
-        "total": 0,
-        "tanggal": "2025-03-09"
+        "total": 29500,
+        "tanggal": "2025-04-09T12:34:56"
     },
     {
         "kode": "PJ0010",
+        "user_id": 5,
+        "kode_member": "MB002",
+        "total": 14400,
+        "tanggal": "2025-04-10T23:12:45"
+    },
+    {
+        "kode": "PJ0011",
+        "user_id": 2,
+        "kode_member": "MB003",
+        "total": 30000,
+        "tanggal": "2025-04-11T08:09:10"
+    },
+    {
+        "kode": "PJ0012",
+        "user_id": 4,
+        "kode_member": "MB001",
+        "total": 15000,
+        "tanggal": "2025-04-12T14:56:37"
+    },
+    {
+        "kode": "PJ0013",
         "user_id": 1,
         "kode_member": "MB005",
-        "total": 0,
-        "tanggal": "2025-03-10"
+        "total": 45000,
+        "tanggal": "2025-04-13T07:45:28"
+    },
+    {
+        "kode": "PJ0014",
+        "user_id": 3,
+        "kode_member": "MB003",
+        "total": 20000,
+        "tanggal": "2025-04-14T19:23:11"
+    },
+    {
+        "kode": "PJ0015",
+        "user_id": 5,
+        "kode_member": "MB002",
+        "total": 21000,
+        "tanggal": "2025-04-15T11:14:05"
+    },
+    {
+        "kode": "PJ0016",
+        "user_id": 2,
+        "kode_member": "MB004",
+        "total": 48000,
+        "tanggal": "2025-04-16T15:36:59"
+    },
+    {
+        "kode": "PJ0017",
+        "user_id": 3,
+        "kode_member": "MB001",
+        "total": 29500,
+        "tanggal": "2025-04-17T12:34:56"
+    },
+    {
+        "kode": "PJ0018",
+        "user_id": 5,
+        "kode_member": "MB002",
+        "total": 14400,
+        "tanggal": "2025-04-18T23:12:45"
+    },
+    {
+        "kode": "PJ0019",
+        "user_id": 2,
+        "kode_member": "MB003",
+        "total": 30000,
+        "tanggal": "2025-04-19T08:09:10"
+    },
+    {
+        "kode": "PJ0020",
+        "user_id": 4,
+        "kode_member": "MB001",
+        "total": 15000,
+        "tanggal": "2025-04-20T14:56:37"
+    },
+    {
+        "kode": "PJ0021",
+        "user_id": 1,
+        "kode_member": "MB005",
+        "total": 45000,
+        "tanggal": "2025-04-21T07:45:28"
+    },
+    {
+        "kode": "PJ0022",
+        "user_id": 3,
+        "kode_member": "MB003",
+        "total": 20000,
+        "tanggal": "2025-04-22T19:23:11"
+    },
+    {
+        "kode": "PJ0023",
+        "user_id": 5,
+        "kode_member": "MB002",
+        "total": 21000,
+        "tanggal": "2025-04-23T11:14:05"
+    },
+    {
+        "kode": "PJ0024",
+        "user_id": 2,
+        "kode_member": "MB004",
+        "total": 48000,
+        "tanggal": "2025-04-24T15:36:59"
+    },
+    {
+        "kode": "PJ0025",
+        "user_id": 3,
+        "kode_member": "MB001",
+        "total": 29500,
+        "tanggal": "2025-04-25T12:34:56"
+    },
+    {
+        "kode": "PJ0026",
+        "user_id": 5,
+        "kode_member": "MB002",
+        "total": 14400,
+        "tanggal": "2025-04-26T23:12:45"
+    },
+    {
+        "kode": "PJ0027",
+        "user_id": 2,
+        "kode_member": "MB003",
+        "total": 30000,
+        "tanggal": "2025-04-27T08:09:10"
+    },
+    {
+        "kode": "PJ0028",
+        "user_id": 4,
+        "kode_member": "MB001",
+        "total": 15000,
+        "tanggal": "2025-04-28T14:56:37"
+    },
+    {
+        "kode": "PJ0029",
+        "user_id": 1,
+        "kode_member": "MB005",
+        "total": 45000,
+        "tanggal": "2025-04-29T07:45:28"
+    },
+    {
+        "kode": "PJ0030",
+        "user_id": 3,
+        "kode_member": "MB003",
+        "total": 20000,
+        "tanggal": "2025-04-30T19:23:11"
     }
 ]
-

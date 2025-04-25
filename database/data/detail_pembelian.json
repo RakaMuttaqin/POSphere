@@ -3,37 +3,101 @@
       "kode": "PB0001 0001",
       "kode_pembelian": "PB0001",
       "kode_barang": "BR0001",
-      "kode_batch": "B001",
+      "kode_batch": "BATCH0001",
       "jumlah": 20,
       "harga_beli": 2800,
       "harga_jual": 3500,
-      "subtotal": 56000,
-      "tanggal_produksi": "2023-11-01",
-      "tanggal_expired": "2025-11-01"
-    },
-    {
-      "kode": "PB0001 0002",
-      "kode_pembelian": "PB0001",
-      "kode_barang": "BR0005",
-      "kode_batch": "B005",
-      "jumlah": 10,
-      "harga_beli": 4500,
-      "harga_jual": 6000,
-      "subtotal": 45000,
-      "tanggal_produksi": "2023-11-01",
-      "tanggal_expired": "2025-11-01"
+      "subtotal": 56000
     },
     {
       "kode": "PB0002 0001",
       "kode_pembelian": "PB0002",
+      "kode_barang": "BR0005",
+      "kode_batch": "BATCH0002",
+      "jumlah": 10,
+      "harga_beli": 4500,
+      "harga_jual": 6000,
+      "subtotal": 45000
+    },
+    {
+      "kode": "PB0003 0001",
+      "kode_pembelian": "PB0003",
       "kode_barang": "BR0003",
-      "kode_batch": "B003",
+      "kode_batch": "BATCH0003",
       "jumlah": 30,
-      "harga_beli": 2800,
-      "harga_jual": 3500,
-      "subtotal": 84000,
-      "tanggal_produksi": "2023-11-01",
-      "tanggal_expired": "2025-11-01"
+      "harga_beli": 2900,
+      "harga_jual": 3600,
+      "subtotal": 87000
+    },
+    {
+      "kode": "PB0004 0001",
+      "kode_pembelian": "PB0004",
+      "kode_barang": "BR0002",
+      "kode_batch": "BATCH0004",
+      "jumlah": 25,
+      "harga_beli": 3000,
+      "harga_jual": 4000,
+      "subtotal": 75000
+    },
+    {
+      "kode": "PB0005 0001",
+      "kode_pembelian": "PB0005",
+      "kode_barang": "BR0004",
+      "kode_batch": "BATCH0005",
+      "jumlah": 15,
+      "harga_beli": 2000,
+      "harga_jual": 3000,
+      "subtotal": 30000
+    },
+    {
+      "kode": "PB0006 0001",
+      "kode_pembelian": "PB0006",
+      "kode_barang": "BR0006",
+      "kode_batch": "BATCH0006",
+      "jumlah": 35,
+      "harga_beli": 3500,
+      "harga_jual": 5000,
+      "subtotal": 122500
+    },
+    {
+      "kode": "PB0007 0001",
+      "kode_pembelian": "PB0007",
+      "kode_barang": "BR0007",
+      "kode_batch": "BATCH0007",
+      "jumlah": 30,
+      "harga_beli": 7000,
+      "harga_jual": 9000,
+      "subtotal": 210000
+    },
+    {
+      "kode": "PB0008 0001",
+      "kode_pembelian": "PB0008",
+      "kode_barang": "BR0008",
+      "kode_batch": "BATCH0008",
+      "jumlah": 18,
+      "harga_beli": 8000,
+      "harga_jual": 10000,
+      "subtotal": 144000
+    },
+    {
+      "kode": "PB0009 0001",
+      "kode_pembelian": "PB0009",
+      "kode_barang": "BR0009",
+      "kode_batch": "BATCH0009",
+      "jumlah": 20,
+      "harga_beli": 5500,
+      "harga_jual": 7000,
+      "subtotal": 110000
+    },
+    {
+      "kode": "PB0010 0001",
+      "kode_pembelian": "PB0010",
+      "kode_barang": "BR0010",
+      "kode_batch": "BATCH0010",
+      "jumlah": 25,
+      "harga_beli": 9000,
+      "harga_jual": 12000,
+      "subtotal": 225000
     }
-]
+  ]
 

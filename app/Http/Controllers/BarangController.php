@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Storage;
 
 class BarangController extends Controller
 {
+    /**
+     * Menampilkan daftar data barang.
+     *
+     */
     public function index()
     {
         $data['barang'] = Barang::with('jenis_barang', 'satuan')->get();
@@ -21,6 +25,10 @@ class BarangController extends Controller
         return view('barang.index')->with($data);
     }
 
+    /**
+     * Menyimpan data barang baru ke dalam basis data.
+     *
+     */
     public function store(StoreBarangRequest $request)
     {
         $validated = $request->validated();
@@ -35,8 +43,6 @@ class BarangController extends Controller
                 $namaGambar = $tanggal . '_' . $gambar->getClientOriginalName();
                 $gambar->storeAs('gambar', $namaGambar, 'public');
             }
-            // dd($namaGambar);
-
 
             $barang = Barang::create([
                 'kode' => $kode,
@@ -55,6 +61,12 @@ class BarangController extends Controller
         }
     }
 
+    /**
+     * Memperbarui data barang yang sudah ada.
+     *
+     * @param  \App\Http\Requests\UpdateBarangRequest  $request
+     * @param  int  $id
+     */
     public function update(UpdateBarangRequest $request, $id)
     {
         $validated = $request->validated();
@@ -94,6 +106,11 @@ class BarangController extends Controller
         }
     }
 
+    /**
+     * Menghapus data barang yang sudah ada.
+     *
+     * @param  int  $id
+     */
     public function destroy($id)
     {
         $barang = Barang::with('detail_penjualan', 'detail_pembelian')->where('kode', $id)->first();
@@ -110,6 +127,12 @@ class BarangController extends Controller
         }
     }
 
+    /**
+     * Menampilkan data barang yang sesuai dengan kriteria yang diberikan.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function list(Request $request)
     {
         $query = Barang::query();
@@ -131,5 +154,27 @@ class BarangController extends Controller
             'barang' => $data,
             'total' => $data->count()
         ]);
+    }
+
+
+    /**
+     * Menampilkan laporan barang.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     */
+    public function laporan(Request $request)
+    {
+        if ($request->has('tanggal_awal') && $request->has('tanggal_akhir')) {
+            $tanggal_awal = $request->query('tanggal_awal');
+            $tanggal_akhir = $request->query('tanggal_akhir');
+            $query = Barang::with('jenis_barang', 'satuan', 'batch')
+                ->whereBetween('created_at', [$tanggal_awal, $tanggal_akhir]);
+        } else {
+            $query = Barang::with('jenis_barang', 'satuan', 'batch');
+        }
+
+        $data['barang'] = $query->get();
+
+        return view('laporan.barang')->with($data);
     }
 }

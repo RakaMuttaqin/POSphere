@@ -43,7 +43,8 @@
                     <div class="card-header">
                         <h4 class="card-title">Statistics</h4>
                         <div class="d-flex align-items-center">
-                            <p class="card-text font-small-2 me-25 mb-0">Updated 1 month ago</p>
+                            <p class="card-text font-small-2 me-25 mb-0">Updated
+                                {{ Carbon\Carbon::now()->format('d-m-Y H:i:s') }}</p>
                         </div>
                     </div>
                     <div class="card-body statistics-body">
@@ -263,6 +264,17 @@
                         $('#total-stok').html(totalStok);
                     }
                 });
+
+                $.ajax({
+                    url: "/member/show", // API endpoint
+                    method: "GET",
+                    dataType: "json",
+                    success: function(response) {
+                        var totalMember = response.total;
+                        $('#total-member').html(totalMember);
+                    }
+                });
+
                 $.ajax({
                     url: "/penjualan/count", // API endpoint
                     method: "GET",

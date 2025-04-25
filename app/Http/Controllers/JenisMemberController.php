@@ -9,7 +9,7 @@ use App\Http\Requests\UpdateJenisMemberRequest;
 class JenisMemberController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan data jenis member beserta relasinya dengan member
      */
     public function index()
     {
@@ -17,6 +17,9 @@ class JenisMemberController extends Controller
         return view('jenis_member.index')->with($data);
     }
 
+    /**
+     * Menyimpan data jenis member yang baru
+     */
     public function store(StoreJenisMemberRequest $request)
     {
         $validated = $request->validated();
@@ -37,11 +40,17 @@ class JenisMemberController extends Controller
         }
     }
 
-    public function show(JenisMember $jenisMember)
+    /**
+     * Menampilkan data jenis member berdasarkan ID
+     */
+    public function show($id)
     {
-        //
+        return response()->json(JenisMember::where('kode', $id)->first());
     }
 
+    /**
+     * Memperbarui data jenis member yang sudah ada
+     */
     public function update(UpdateJenisMemberRequest $request, $id)
     {
         $validated = $request->validated();
@@ -59,6 +68,11 @@ class JenisMemberController extends Controller
         }
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * Menghapus data jenis member yang sudah ada
+     */
     public function destroy($id)
     {
         $jenisMember = JenisMember::with('member')->where('kode', $id)->first();

@@ -8,12 +8,14 @@ use App\Http\Requests\UpdateSatuanRequest;
 
 class SatuanController extends Controller
 {
+    // Fungsi ini menampilkan daftar semua satuan.
     public function index()
     {
         $data['satuan'] = Satuan::all();
         return view('satuan.index')->with($data);
     }
 
+    // Fungsi ini menyimpan satuan baru ke dalam basis data.
     public function store(StoreSatuanRequest $request)
     {
         $validated = $request->validated();
@@ -29,6 +31,7 @@ class SatuanController extends Controller
         }
     }
 
+    // Fungsi ini memperbarui data satuan yang sudah ada.
     public function update(UpdateSatuanRequest $request, $id)
     {
         $validated = $request->validated();
@@ -44,6 +47,7 @@ class SatuanController extends Controller
         }
     }
 
+    // Fungsi ini menghapus satuan dari basis data.
     public function destroy($id)
     {
         $satuan = Satuan::with('barang')->where('id', $id)->first();

@@ -19,5 +19,54 @@
       "stok": 30,
       "tanggal_produksi": "2025-02-15",
       "tanggal_expired": "2026-02-15"
+    },
+    {
+      "kode": "BATCH0004",
+      "kode_barang": "BR0002",
+      "stok": 25,
+      "tanggal_produksi": "2025-03-01",
+      "tanggal_expired": "2026-03-01"
+    },
+    {
+      "kode": "BATCH0005",
+      "kode_barang": "BR0004",
+      "stok": 15,
+      "tanggal_produksi": "2025-03-05",
+      "tanggal_expired": "2026-03-05"
+    },
+    {
+      "kode": "BATCH0006",
+      "kode_barang": "BR0006",
+      "stok": 40,
+      "tanggal_produksi": "2025-03-10",
+      "tanggal_expired": "2026-03-10"
+    },
+    {
+      "kode": "BATCH0007",
+      "kode_barang": "BR0007",
+      "stok": 35,
+      "tanggal_produksi": "2025-03-12",
+      "tanggal_expired": "2026-03-12"
+    },
+    {
+      "kode": "BATCH0008",
+      "kode_barang": "BR0008",
+      "stok": 18,
+      "tanggal_produksi": "2025-03-15",
+      "tanggal_expired": "2026-03-15"
+    },
+    {
+      "kode": "BATCH0009",
+      "kode_barang": "BR0009",
+      "stok": 22,
+      "tanggal_produksi": "2025-03-20",
+      "tanggal_expired": "2026-03-20"
+    },
+    {
+      "kode": "BATCH0010",
+      "kode_barang": "BR0010",
+      "stok": 28,
+      "tanggal_produksi": "2025-03-25",
+      "tanggal_expired": "2026-03-25"
     }
   ]

@@ -9,7 +9,7 @@ use App\Http\Requests\UpdateBatchRequest;
 class BatchController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan daftar data batch.
      */
     public function index()
     {
@@ -17,23 +17,17 @@ class BatchController extends Controller
         return view('batch.index')->with($data);
     }
 
-    public function store(StoreBatchRequest $request)
+    /**
+     * Menampilkan data batch yang sesuai dengan parameter yang diberikan.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function show($id)
     {
-        //
-    }
-
-    public function show(Batch $batch)
-    {
-        //
-    }
-
-    public function update(UpdateBatchRequest $request, Batch $batch)
-    {
-        //
-    }
-
-    public function destroy(Batch $batch)
-    {
-        //
+        $data['batch'] = Batch::with('barang')->when($id, function ($query, $id) {
+            $query->where('id', $id);
+        })->get();
+        return response()->json($data);
     }
 }

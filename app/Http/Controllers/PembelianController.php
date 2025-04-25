@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 class PembelianController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan daftar data pembelian
      */
     public function index()
     {
@@ -25,10 +25,12 @@ class PembelianController extends Controller
         return view('pembelian.index')->with($data);
     }
 
+    /**
+     * Menyimpan data pembelian baru ke dalam basis data
+     */
     public function store(StorePembelianRequest $request)
     {
         $validated = $request->validated(); // Validasi data
-        // dd($validated);
         DB::beginTransaction(); // Mulai transaksi database
 
         try {
@@ -45,8 +47,6 @@ class PembelianController extends Controller
                 'tanggal_masuk' => now(),
                 'keterangan' => $validated['keterangan'] ?? null,
             ]);
-
-            // dd($pembelian);
 
             $total_pembelian = 0; // Variabel untuk menghitung total pembelian
 
@@ -94,16 +94,9 @@ class PembelianController extends Controller
         }
     }
 
-    public function update(UpdatePembelianRequest $request, Pembelian $pembelian)
-    {
-        //
-    }
-
-    public function destroy(Pembelian $pembelian)
-    {
-        //
-    }
-
+    /**
+     * Menampilkan detail pembelian berdasarkan ID
+     */
     public function detail($id)
     {
         $data = Pembelian::with('user', 'pemasok', 'detail_pembelian', 'detail_pembelian.barang', 'detail_pembelian.barang.batch')

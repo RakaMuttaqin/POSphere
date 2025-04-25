@@ -26,10 +26,10 @@
                         <input type="date" id="tanggal_terima" class="form-control" name="tanggal_terima" required>
                     </div>
 
-                    <div class="mb-1">
+                    {{-- <div class="mb-1">
                         <label class="form-label" for="keterangan">Keterangan</label>
                         <input type="text" id="keterangan" class="form-control" name="keterangan">
-                    </div>
+                    </div> --}}
 
                     <div class="mb-1">
                         <label class="form-label" for="searchBarang">Cari Barang</label>
@@ -93,7 +93,7 @@
                             <th>Nama Barang</th>
                             <th>Jumlah</th>
                             <th>Harga Beli</th>
-                            <th>Harga Jual</th>
+                            <th>Margin</th>
                         </tr>
                     </thead>
                     <tbody>

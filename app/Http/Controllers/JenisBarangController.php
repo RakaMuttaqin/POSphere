@@ -10,13 +10,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class JenisBarangController extends Controller
 {
     use HasFactory;
-
+    /**
+     * Menampilkan daftar jenis barang.
+     */
     public function index()
     {
         $data['jenisBarang'] = JenisBarang::all();
         return view('jenis_barang.index')->with($data);
     }
 
+    /**
+     * Menyimpan data jenis barang baru ke dalam basis data.
+     *
+     * @param  \App\Http\Requests\StoreJenisBarangRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(StoreJenisBarangRequest $request)
     {
         $validated = $request->validated();
@@ -37,6 +45,13 @@ class JenisBarangController extends Controller
         }
     }
 
+    /**
+     * Memperbarui data jenis barang yang sudah ada.
+     *
+     * @param  \App\Http\Requests\UpdateJenisBarangRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(UpdateJenisBarangRequest $request, $id)
     {
         $validated = $request->validated();
@@ -54,6 +69,12 @@ class JenisBarangController extends Controller
         }
     }
 
+    /**
+     * Menghapus data jenis barang yang sudah ada.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy($id)
     {
         $jenisBarang = JenisBarang::with('barang')->where('kode', $id)->first();

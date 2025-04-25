@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class MemberController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan daftar member beserta jenis membernya
      */
     public function index()
     {
@@ -20,6 +20,9 @@ class MemberController extends Controller
         return view('member.index')->with($data);
     }
 
+    /**
+     * Menyimpan data member baru ke dalam basis data
+     */
     public function store(StoreMemberRequest $request)
     {
         $validated = $request->validated();
@@ -43,23 +46,31 @@ class MemberController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Menampilkan data member berdasarkan pencarian
      */
     public function show(Request $request)
     {
         $query = Member::query();
 
         if ($request->has('search')) {
-            $query->where('nama', 'like', '%' . $request->search . '%')
-                ->orWhere('email', 'like', '%' . $request->search . '%')
-                ->orWhere('no_hp', 'like', '%' . $request->search . '%');
+            $query->where(function ($q) use ($request) {
+                $q->where('nama', 'like', '%' . $request->search . '%')
+                    ->orWhere('email', 'like', '%' . $request->search . '%')
+                    ->orWhere('no_hp', 'like', '%' . $request->search . '%');
+            });
         }
 
         $member = $query->with('jenis_member')->get();
 
-        return response()->json($member);
+        return response()->json([
+            'member' => $member,
+            'total' => $member->count()
+        ]);
     }
 
+    /**
+     * Memperbarui data member yang sudah ada
+     */
     public function update(UpdateMemberRequest $request, $id)
     {
         $validated = $request->validated();
@@ -79,6 +90,9 @@ class MemberController extends Controller
         }
     }
 
+    /**
+     * Menghapus data member dari basis data
+     */
     public function destroy($id)
     {
         $member = Member::with('penjualan')->where('kode', $id)->first();

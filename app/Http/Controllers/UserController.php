@@ -9,22 +9,34 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    /**
+     * Menampilkan daftar pengguna.
+     */
+
     public function index()
     {
-        //
+        $data['users'] = User::all();
+        return view('users.index')->with($data);
     }
 
+    /**
+     * Menyimpan data pengguna baru ke dalam basis data.
+     */
     public function store(Request $request)
     {
         try {
             $validated = $request->validate([
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
                 'role' => ['required', 'string', 'max:255'],
             ]);
 
-            User::create($validated);
+            User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => Hash::make('password'),
+                'role' => $validated['role'],
+            ]);
 
             return back()->with("success", "User berhasil ditambahkan");
         } catch (\Exception $e) {
@@ -32,6 +44,9 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Memperbarui data pengguna yang sudah ada.
+     */
     public function update(Request $request, $id)
     {
         try {
@@ -49,6 +64,9 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Menghapus data pengguna dari basis data.
+     */
     public function destroy($id)
     {
         try {
@@ -59,11 +77,17 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Menampilkan profil pengguna yang sedang login.
+     */
     public function profile()
     {
         //
     }
 
+    /**
+     * Mengubah nama pengguna yang sedang login.
+     */
     public function changeUsername(Request $request)
     {
         try {
@@ -79,6 +103,9 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Mengubah password pengguna yang sedang login.
+     */
     public function changePassword(Request $request)
     {
         $request->validate([

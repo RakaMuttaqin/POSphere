@@ -14,7 +14,7 @@ use Maatwebsite\Excel\Facades\Excel;
 class PengajuanBarangController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan halaman daftar pengajuan barang.
      */
     public function index()
     {
@@ -23,6 +23,9 @@ class PengajuanBarangController extends Controller
         return view('pengajuan_barang.index')->with($data);
     }
 
+    /**
+     * Menyimpan data pengajuan barang yang baru.
+     */
     public function store(StorePengajuanBarangRequest $request)
     {
         $validated = $request->validated();
@@ -37,8 +40,6 @@ class PengajuanBarangController extends Controller
                 'status' => '0',
             ]);
 
-            // dd($pengajuanBarang);
-
             return back()->with('success', 'Pengajuan barang berhasil ditambahkan.');
         } catch (\Exception $e) {
             return back()->with('error', 'Terjadi kesalahan saat menambahkan pengajuan barang.');
@@ -46,15 +47,7 @@ class PengajuanBarangController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(PengajuanBarang $pengajuanBarang)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Memperbarui data pengajuan barang yang sudah ada.
      */
     public function update(UpdatePengajuanBarangRequest $request, $id)
     {
@@ -73,6 +66,9 @@ class PengajuanBarangController extends Controller
         }
     }
 
+    /**
+     * Memperbarui status pengajuan barang.
+     */
     public function updateStatus(Request $request, $id)
     {
         $validated = $request->validate([
@@ -91,7 +87,7 @@ class PengajuanBarangController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Menghapus data pengajuan barang yang sudah ada.
      */
     public function destroy($id)
     {
@@ -103,11 +99,17 @@ class PengajuanBarangController extends Controller
         }
     }
 
+    /**
+     * Mengekspor data pengajuan barang ke dalam format Excel.
+     */
     public function export()
     {
         return Excel::download(new PengajuanBarangExport, 'pengajuan_barang.xlsx');
     }
 
+    /**
+     * Membuat PDF dari data pengajuan barang.
+     */
     public function generatePDF()
     {
         // Ambil data barang dari database

@@ -8,12 +8,18 @@ use App\Http\Requests\UpdatePemasokRequest;
 
 class PemasokController extends Controller
 {
+    /**
+     * Menampilkan daftar data pemasok
+     */
     public function index()
     {
         $data['pemasok'] = Pemasok::all();
         return view('pemasok.index')->with($data);
     }
 
+    /**
+     * Menyimpan data pemasok yang baru
+     */
     public function store(StorePemasokRequest $request)
     {
         $validated = $request->validated();
@@ -32,6 +38,9 @@ class PemasokController extends Controller
         }
     }
 
+    /**
+     * Memperbarui data pemasok yang sudah ada
+     */
     public function update(UpdatePemasokRequest $request, $id)
     {
         $validated = $request->validated();
@@ -50,6 +59,9 @@ class PemasokController extends Controller
         }
     }
 
+    /**
+     * Menghapus data pemasok yang sudah ada
+     */
     public function destroy($id)
     {
         $pemasok = Pemasok::with('pembelian')->where('id', $id)->first();

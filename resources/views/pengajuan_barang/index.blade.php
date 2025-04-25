@@ -252,7 +252,7 @@
                         search: params.term
                     }),
                     processResults: (data) => ({
-                        results: data.map((item) => ({
+                        results: data.member.map((item) => ({
                             id: item.kode,
                             text: `${item.kode} - ${item.nama}`,
                             no_hp: item.no_hp,
